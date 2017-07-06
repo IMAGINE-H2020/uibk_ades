@@ -21,10 +21,8 @@ namespace ades {
         virtual MotionType getMotionType() const = 0;
 
         //TODO Does predicting a duration make sense?
-
         //TODO Talk to KIT
     };
-
 }
 
 

@@ -73,10 +73,8 @@ namespace ades {
         std::map<std::string, std::vector<float*>>::const_iterator getEffectExperience()
         {
             return effectExperience.cbegin();
-        }       
-    
+        }
     };
-
 }
 
 
