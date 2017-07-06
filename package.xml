@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package>
+  <name>ades</name>
+  <version>0.0.0</version>
+  <description>The ades package</description>
+
+  <maintainer email="philipp.zech@uibk.ac.at">Philipp Zech</maintainer>
+  <maintainer email="erwan.renaudo@uibk.ac.at">Erwan Renaudo</maintainer>
+  <maintainer email="jakob.hollenstein@uibk.ac.at">Jakob Hollenstein</maintainer>
+
+  <license>BSD</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>roscpp</build_depend>
+  
+  <run_depend>roscpp</run_depend>
+ 
+</package>
