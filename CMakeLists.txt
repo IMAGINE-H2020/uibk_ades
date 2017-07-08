@@ -56,4 +56,4 @@ target_link_libraries (
   ${MLPACK_LIBRARY}
 )
 
-#install(TARGETS ${LIBRARY_NAME} DESTINATION /usr/lib)
+#install(TARGETS ${LIBRARY_NAME} DESTINATION /usr/local/lib)
