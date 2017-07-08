@@ -1,13 +1,35 @@
-cmake_minimum_required(VERSION 2.8.3)
+cmake_minimum_required(VERSION 3.1)
 project(libades)
 
-set (CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_BUILD_TYPE Release)
 set(LIBRARY_NAME libades)
 
-find_package(mlpack)
+find_package(Boost REQUIRED COMPONENTS system serialization)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
+find_path(MLPACK_INCLUDE_DIR
+    NAMES core.hpp prereqs.hpp
+    PATHS /usr/local/include/mlpack/
+)
+
+if(NOT MLPACK_INCLUDE_DIR)
+    message(FATAL_ERROR "MLPACK_INCLUDE_DIR not found!")
+endif()
+
+find_library(MLPACK_LIBRARY
+    NAMES libmlpack.so
+    PATHS /usr/local/lib/
+)
+
+if(NOT MLPACK_LIBRARY)
+    message(FATAL_ERROR "MLPACK_LIBRARY not found!")
+endif()
+
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include
+                    ${Boost_INCLUDE_DIR}
+                    ${MLPACK_INCLUDE_DIR}
+)
 
 file (
   GLOB_RECURSE
@@ -30,7 +52,8 @@ add_library (
 
 target_link_libraries (
   ${LIBRARY_NAME}
-  mlpack
+  ${Boost_LIBRARIES}
+  ${MLPACK_LIBRARY}
 )
 
 #install(TARGETS ${LIBRARY_NAME} DESTINATION /usr/lib)

@@ -1,5 +1,4 @@
-#ifndef ADES_H
-#define ADES_H
+#pragma once
 
 
 #include <string>
@@ -7,85 +6,88 @@
 #include <vector>
 #include <iterator>
 
+
 #include "motion_sequence.h"
+#include "../utils/serializable.h"
+
 
 namespace ades {
 
-    class Ades
+    class Ades : public Serializable
     {
     private:
-        //symbolic
-        const std::string ID;
-        std::string name;
-        std::map<std::string, std::string> preconditions;
-        std::map<std::string, std::string> effects;
+        const uint64_t ID;
+        std::string name_;
+        std::map<std::string, std::string> preconditions_;
+        std::map<std::string, std::string> effects_;
 
         //TODO Explicit scene targets/affordances necessary or do preconditions suffice?
-    
-        //subsymbolic
-        std::map<std::string, MotionSequence> motions;
-    
-    
+
+        std::map<std::string, MotionSequence> motions_;
+
+
     public:
         Ades(std::string name,
              std::map<std::string, std::string> preconditions = std::map<std::string, std::string>(),
              std::map<std::string, std::string> effects = std::map<std::string, std::string>(),
              std::map<std::string, MotionSequence> motions = std::map<std::string, MotionSequence>()
             );
-    
+
         ~Ades();
 
-    
-        const std::string getID()
+
+        const uint64_t getID()
         {
             return ID;
         }
 
         std::string getName()
         {
-            return name;
+            return name_;
         }
 
         void setName(std::string name)
         {
-            this->name = name;
+            name_ = name;
         }
 
-        bool insertPreconditions(const std::map<std::string, std::string> conditions);
+        void insertPreconditions(const std::map<std::string, std::string> conditions);
 
         //if empty, remove all, otherwise what's contained
-        bool removePreconditions(const std::vector<std::string> conditions);
+        void removePreconditions(const std::vector<std::string> conditions);
 
-        bool modifyPreconditions(const std::map<std::string, std::string> conditions);
+        void modifyPreconditions(const std::map<std::string, std::string> conditions);
 
         std::map<std::string, std::string>::const_iterator getPreconditions()
         {
-            return preconditions.cbegin();
+            return preconditions_.cbegin();
         }
 
-        bool insertEffects(const std::map<std::string, std::string> effects);
-    
-        bool removeEffects(const std::vector<std::string> effects);
+        void insertEffects(const std::map<std::string, std::string> effects);
 
-        bool modifyEffects(const std::map<std::string, std::string> effects);
+        void removeEffects(const std::vector<std::string> effects);
+
+        void modifyEffects(const std::map<std::string, std::string> effects);
 
         std::map<std::string, std::string>::const_iterator getEffects()
         {
-            return effects.cbegin();
+            return effects_.cbegin();
         }
 
         std::string insertMotionSequence(const std::string motionSequenceID,
                                          const MotionSequence motionSequence);
-    
+
         bool removeMotionSequence(const std::string motionSequenceID);
 
         MotionSequence &modifyMotionSequence(const std::string motionSequenceID);
 
         std::map<std::string, MotionSequence>::const_iterator getMotionSequences()
         {
-            return motions.cbegin();
-        }    
+            return motions_.cbegin();
+        }
+
+        void serialize(boost::archive::xml_oarchive oa, unsigned int version);
+
+        void deserialize(boost::archive::xml_iarchive ia, unsigned int version);
     };
 }
-
-#endif

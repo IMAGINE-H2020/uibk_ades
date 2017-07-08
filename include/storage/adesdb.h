@@ -1,5 +1,4 @@
-#ifndef ADESDB_H
-#define ADESDB_H
+#pragma once
 
 
 #include <vector>
@@ -12,15 +11,21 @@ namespace ades {
     class AdesDB
     {
     private:
+        std::string home;
+
         std::vector<Ades> ades;
 
+        bool populate();
+
+        bool serialize();
+
     public:
-        AdesDB();
-        
+        AdesDB(std::string home_);
+
         ~AdesDB();
 
         bool addAdes(std::vector<Ades> ades_);
-        
+
         bool removeAdesByName(std::string name);
 
         bool removeAdesByID(std::string id);
@@ -37,8 +42,5 @@ namespace ades {
         const Ades getAdesByName(std::string name);
 
         const Ades getAdesByID(std::string id);
-    };    
+    };
 }
-
-
-#endif

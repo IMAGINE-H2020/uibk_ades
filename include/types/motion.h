@@ -1,15 +1,15 @@
-#ifndef MOTION_H
-#define MOTION_H
+#pragma once
 
 
 #include <vector>
 
 #include "motion_type.h"
+#include "../utils/serializable.h"
 
 
 namespace ades {
 
-    class Motion
+    class Motion : public Serializable
     {
     public:
         virtual std::vector<std::string> getMotionParameters() const = 0;
@@ -24,6 +24,3 @@ namespace ades {
         //TODO Talk to KIT
     };
 }
-
-
-#endif

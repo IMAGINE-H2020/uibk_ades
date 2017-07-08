@@ -1,5 +1,4 @@
-#ifndef MOTION_SEQUENCE_H
-#define MOTION_SEQUENCE_H
+#pragma once
 
 
 #include <vector>
@@ -9,73 +8,75 @@
 
 
 #include "motion.h"
+#include "../utils/serializable.h"
 
 
 namespace ades {
 
-    class MotionSequence
+    class MotionSequence : public Serializable
     {
     private:
-        const std::string ID;
-        std::vector<std::string> inputTypes;
-        std::vector<Motion> motions;
-        std::map<std::string, mlpack::gmm::GMM> effectModels;
-        std::map<std::string, std::vector<float*>> effectExperience;
+        const uint64_t ID;
+        std::vector<std::string> inputTypes_;
+        std::vector<const Motion*> motions_;
+        std::map<std::string, mlpack::gmm::GMM> effectModels_;
+        std::map<std::string, std::vector<float*>> effectExperience_;
 
-        
+
     public:
-        MotionSequence(const std::string ID,
-                       std::vector<std::string> inputTypes = std::vector<std::string>(),
-                       std::vector<Motion> motions = std::vector<Motion>(),
-                       std::map<std::string, EffectDistribution> effects = std::map<std::string, EffectDistribution>());
+        MotionSequence(std::vector<std::string> inputTypes = std::vector<std::string>(),
+                       std::vector<const Motion*> motions = std::vector<const Motion*>(),
+                       std::map<std::string, mlpack::gmm::GMM> effectModels = std::map<std::string, mlpack::gmm::GMM>());
 
         ~MotionSequence();
 
 
-        const std::string getID()
+        const uint64_t getID()
         {
             return ID;
         }
 
-        bool insertInputTypes(const std::vector<std::string> inputTypes);
+        void insertInputTypes(const std::vector<std::string> inputTypes);
 
         //if empty, remove all, otherwise what's contained
-        bool removeInputTypes(const std::vector<std::string> inputTypes);
+        void removeInputTypes(const std::vector<std::string> inputTypes);
 
         std::vector<std::string>::const_iterator getInputTypes()
         {
-            return inputTypes.cbegin();
+            return inputTypes_.cbegin();
         }
 
-        bool insertMotion(const Motion motion);
-    
-        bool removeMotion(const int step);
+        void insertMotion(const int step, const Motion *motion);
 
-        Motion &modifyMotion(const int step);
+        void removeMotion(const int step);
 
-        std::vector<Motion>::const_iterator getMotions()
+        Motion const *modifyMotion(const int step);
+
+        std::vector<const Motion*>::const_iterator getMotions()
         {
-            return motions.cbegin();
+            return motions_.cbegin();
         }
 
-        bool insertEffectModel(const std::string effectType, EffectDistribution dist);
-    
-        bool removeEffectModel(const std::string effectType);
+        void insertEffectModel(const std::string effectType, mlpack::gmm::GMM dist);
+
+        void removeEffectModel(const std::string effectType);
 
         //add observation to experience vector and regularly (e.g., after adding 10 new observations, retrain)
-        bool updateEffectModel(std::string effectType, float *observation);
+        void updateEffectModel(std::string effectType, float *observation);
 
         std::map<std::string, mlpack::gmm::GMM>::const_iterator getEffectModels()
         {
-            return effectModels.cbegin();
+            return effectModels_.cbegin();
         }
 
         std::map<std::string, std::vector<float*>>::const_iterator getEffectExperience()
         {
-            return effectExperience.cbegin();
+            return effectExperience_.cbegin();
         }
+
+        void serialize(boost::archive::xml_oarchive oa, unsigned int version);
+
+        void deserialize(boost::archive::xml_iarchive ia, unsigned int version);
+
     };
 }
-
-
-#endif

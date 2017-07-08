@@ -1,12 +1,8 @@
-#ifndef MOTION_TYPE_H
-#define MOTION_TYPE_H
+#pragma once
 
 
 namespace ades {
 
     enum class MotionType {DMP, Cyclic, VisualServoing, PID};
-    
+
 }
-
-
-#endif
