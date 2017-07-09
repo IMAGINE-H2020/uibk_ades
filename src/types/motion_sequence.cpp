@@ -13,7 +13,6 @@ namespace ades {
             effectModels_(effectModels)
     {}
 
-
     void MotionSequence::insertInputTypes(const vector<string> inputTypes)
     {
         for(auto inputType : inputTypes) {
@@ -56,15 +55,10 @@ namespace ades {
         effectModels_.erase(effectType);
     }
 
-    //add observation to experience vector and regularly (e.g., after adding 10 new observations, retrain)
-    void MotionSequence::updateEffectModel(string effectType, float *observation)
+    void MotionSequence::updateEffectModel(string effectType, vector<double> observation)
     {
-        effectExperience_.at(effectType).push_back(observation);
-        if (effectExperience_.size()%10 == 0)
-        {
-            //retrain model
-            //effectModels_.at(effectType).train()
-        }
+        arma::mat observation_(observation);
+        effectModels_.at(effectType).Train(observation_, 1, true);
     }
 
     void MotionSequence::serialize(boost::archive::xml_oarchive oa, const unsigned int version)
@@ -74,6 +68,6 @@ namespace ades {
 
     void MotionSequence::deserialize(boost::archive::xml_iarchive ia, const unsigned int version)
     {
-
+        //mlpack allows serializing/deserializing models
     }
 }

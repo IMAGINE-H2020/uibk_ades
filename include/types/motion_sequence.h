@@ -5,6 +5,7 @@
 #include <map>
 #include <mlpack/core.hpp>
 #include <mlpack/methods/gmm/gmm.hpp>
+#include <armadillo>
 
 
 #include "motion.h"
@@ -20,7 +21,6 @@ namespace ades {
         std::vector<std::string> inputTypes_;
         std::vector<const Motion*> motions_;
         std::map<std::string, mlpack::gmm::GMM> effectModels_;
-        std::map<std::string, std::vector<float*>> effectExperience_;
 
 
     public:
@@ -30,7 +30,6 @@ namespace ades {
 
         ~MotionSequence();
 
-
         const uint64_t getID()
         {
             return ID;
@@ -38,7 +37,6 @@ namespace ades {
 
         void insertInputTypes(const std::vector<std::string> inputTypes);
 
-        //if empty, remove all, otherwise what's contained
         void removeInputTypes(const std::vector<std::string> inputTypes);
 
         std::vector<std::string>::const_iterator getInputTypes()
@@ -61,17 +59,11 @@ namespace ades {
 
         void removeEffectModel(const std::string effectType);
 
-        //add observation to experience vector and regularly (e.g., after adding 10 new observations, retrain)
-        void updateEffectModel(std::string effectType, float *observation);
+        void updateEffectModel(std::string effectType, std::vector<double> observation);
 
         std::map<std::string, mlpack::gmm::GMM>::const_iterator getEffectModels()
         {
             return effectModels_.cbegin();
-        }
-
-        std::map<std::string, std::vector<float*>>::const_iterator getEffectExperience()
-        {
-            return effectExperience_.cbegin();
         }
 
         void serialize(boost::archive::xml_oarchive oa, unsigned int version);

@@ -24,7 +24,6 @@ namespace ades {
         }
     }
 
-    //if empty, remove all, otherwise what's contained
     void Ades::removePreconditions(const vector<string> conditions)
     {
         for(auto cond : conditions)
