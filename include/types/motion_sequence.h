@@ -66,6 +66,8 @@ namespace ades {
             return effectModels_.cbegin();
         }
 
+        double estimateParameterConfidence(const std::string effectType, std::vector<double> estimatedParameters);
+
         void serialize(boost::archive::xml_oarchive oa, unsigned int version);
 
         void deserialize(boost::archive::xml_iarchive ia, unsigned int version);

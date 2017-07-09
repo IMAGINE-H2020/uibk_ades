@@ -1,8 +1,0 @@
-get_filename_component(LIBADES_CMAKE_DIR "{CMAKE_CURRENT_LIST_FILE}" PATH)
-set(LIBADES_INCLUDE_DIRS "@CONF_INCLUDE_DIRS@")
-
-if(NOT TARGET libades AND NOT LIBADES_BINARY_DIR)
-  include("${FOOBAR_CMAKE_DIR}/libadesTargets.cmake")
-endif()
-
-set(LIBADES_LIBRARIES libades)

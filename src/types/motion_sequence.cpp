@@ -61,6 +61,12 @@ namespace ades {
         effectModels_.at(effectType).Train(observation_, 1, true);
     }
 
+    double MotionSequence::estimateParameterConfidence(const std::string effectType, std::vector<double> estimatedParameters)
+    {
+        arma::vec estimatedParameters_(estimatedParameters);
+        return effectModels_.at(effectType).Probability(estimatedParameters_);
+    }
+
     void MotionSequence::serialize(boost::archive::xml_oarchive oa, const unsigned int version)
     {
 

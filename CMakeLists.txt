@@ -2,43 +2,40 @@ cmake_minimum_required(VERSION 3.1)
 project(libades)
 
 set(CMAKE_CXX_STANDARD 11)
-#set(CMAKE_CXX_COMPILER clang++)
+set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_BUILD_TYPE Release)
 set(LIBRARY_NAME libades)
 
-set(LIBADES_MAJOR_VERSION 0)
-set(LIBADES_MINOR_VERSION 1)
-set(LIBADES_PATCH_VERSION 0)
-set(LIBADES_VERSION
-  ${LIBADES_MAJOR_VERSION}.${LIBADES_MINOR_VERSION}.${LIBADES_PATCH_VERSION})
-
 find_package(Boost REQUIRED COMPONENTS system serialization)
 find_package(Armadillo)
+
 
 find_path(MLPACK_INCLUDE_DIR
   NAMES core.hpp prereqs.hpp
   PATHS /usr/local/include/mlpack/
 )
-
 if(NOT MLPACK_INCLUDE_DIR)
   message(FATAL_ERROR "MLPACK_INCLUDE_DIR not found!")
 endif()
+
 
 find_library(MLPACK_LIBRARY
   NAMES libmlpack.so
   PATHS /usr/local/lib/
 )
-
 if(NOT MLPACK_LIBRARY)
   message(FATAL_ERROR "MLPACK_LIBRARY not found!")
 endif()
+
 
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/include
   ${Boost_INCLUDE_DIR}
   ${ARMADILLO_INCLUDE_DIR}
   ${MLPACK_INCLUDE_DIR}
+  GnuInstallDirs
 )
+
 
 file (
   GLOB_RECURSE
@@ -46,11 +43,13 @@ file (
   src/*
 )
 
+
 file (
   GLOB_RECURSE
   INCLUDE_FILES
   include/*
 )
+
 
 add_library (
   ${LIBRARY_NAME}
@@ -67,32 +66,3 @@ target_link_libraries (
 )
 
 #install(TARGETS ${LIBRARY_NAME} DESTINATION /usr/local/lib)
-
-#[[
-export(TARGETS libades
-  FILE "${PROJECT_BINARY_DIR}/libadesTargets.cmake")
-
-export(PACKAGE libades)
-
-file(RELATIVE_PATH REL_INCLUDE_DIR "${INSTALL_CMAKE_DIR}"
-   "${INSTALL_INCLUDE_DIR}")
-
-set(CONF_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
-configure_file(libadesConfig.cmake.in
-  "${PROJECT_BINARY_DIR}/libadesConfig.cmake" @ONLY)
-
-set(CONF_INCLUDE_DIRS "\${LIBADES_CMAKE_DIR}/${REL_INCLUDE_DIR}")
-configure_file(libadesConfig.cmake.in
-  "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/libadesConfig.cmake" @ONLY)
-
-configure_file(libadesConfigVersion.cmake.in
-  "${PROJECT_BINARY_DIR}/libadesConfigVersion.cmake" @ONLY)
-
-install(FILES
-  "${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/libadesConfig.cmake"
-  "${PROJECT_BINARY_DIR}/libadesConfigVersion.cmake"
-  DESTINATION "${INSTALL_CMAKE_DIR}" COMPONENT dev)
-
-install(EXPORT libadesTargets DESTINATION
-  "${INSTALL_CMAKE_DIR}" COMPONENT dev)
-]]
