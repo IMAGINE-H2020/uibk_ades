@@ -12,7 +12,7 @@ find_package(Armadillo)
 
 find_path(MLPACK_INCLUDE_DIR
   NAMES core.hpp prereqs.hpp
-  PATHS /usr/local/include/mlpack/
+  PATHS /usr/local/include/mlpack/ /usr/include/mlpack/
 )
 if(NOT MLPACK_INCLUDE_DIR)
   message(FATAL_ERROR "MLPACK_INCLUDE_DIR not found!")
