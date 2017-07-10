@@ -4,7 +4,7 @@ project(libades)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_BUILD_TYPE Release)
-set(LIBRARY_NAME libades)
+set(LIBRARY_NAME imagine-ades)
 
 find_package(Boost REQUIRED COMPONENTS system serialization)
 find_package(Armadillo)
@@ -12,7 +12,7 @@ find_package(Armadillo)
 
 find_path(MLPACK_INCLUDE_DIR
   NAMES core.hpp prereqs.hpp
-  PATHS /usr/local/include/mlpack/
+  PATHS /usr/local/include/mlpack/ /usr/include/mlpack/
 )
 if(NOT MLPACK_INCLUDE_DIR)
   message(FATAL_ERROR "MLPACK_INCLUDE_DIR not found!")
@@ -50,6 +50,12 @@ file (
   include/*
 )
 
+file (
+  GLOB_RECURSE
+  EXAMPLES_FILES
+  examples/*
+)
+
 
 add_library (
   ${LIBRARY_NAME}
@@ -64,5 +70,11 @@ target_link_libraries (
   ${MLPACK_LIBRARY}
   ${ARMADILLO_LIBRARIES}
 )
+
+export(TARGETS ${LIBRARY_NAME} FILE "${PROJECT_BINARY_DIR}/ADEStargets.cmake")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+list(APPEND CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+# Adding example subdirectory
+add_subdirectory(examples)
 
 #install(TARGETS ${LIBRARY_NAME} DESTINATION /usr/local/lib)
