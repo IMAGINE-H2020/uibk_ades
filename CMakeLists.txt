@@ -4,7 +4,7 @@ project(libades)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_BUILD_TYPE Release)
-set(LIBRARY_NAME libades)
+set(LIBRARY_NAME imagine-ades)
 
 find_package(Boost REQUIRED COMPONENTS system serialization)
 find_package(Armadillo)
@@ -50,6 +50,12 @@ file (
   include/*
 )
 
+file (
+  GLOB_RECURSE
+  EXAMPLES_FILES
+  examples/*
+)
+
 
 add_library (
   ${LIBRARY_NAME}
@@ -64,5 +70,9 @@ target_link_libraries (
   ${MLPACK_LIBRARY}
   ${ARMADILLO_LIBRARIES}
 )
+
+#message(WARNING lib${LIBRARY_NAME})
+#add_executable(populating_ades ${CMAKE_CURRENT_SOURCE_DIR}/examples/populating_ades.cpp)
+#target_link_libraries(populating_ades build/${LIBRARY_NAME})
 
 #install(TARGETS ${LIBRARY_NAME} DESTINATION /usr/local/lib)
