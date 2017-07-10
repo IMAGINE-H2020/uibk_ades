@@ -16,7 +16,8 @@ namespace ades {
             motions_(motions)
     {}
 
-    Ades::~Ades(){}
+    Ades::~Ades()
+    {}
 
     void Ades::insertPreconditions(const map<string, string> conditions)
     {
