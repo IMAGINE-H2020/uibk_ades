@@ -16,7 +16,7 @@ namespace ades {
     class Ades : public Serializable
     {
     private:
-        const uint64_t ID;
+        uint64_t ID;
         std::string name_;
         std::map<std::string, std::string> preconditions_;
         std::map<std::string, std::string> effects_;
@@ -36,12 +36,12 @@ namespace ades {
         ~Ades();
 
 
-        const uint64_t getID()
+        uint64_t getID() const
         {
             return ID;
         }
 
-        std::string getName()
+        std::string getName() const
         {
             return name_;
         }

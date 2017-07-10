@@ -2,45 +2,57 @@
 
 
 #include <vector>
-#include "ades.h"
+#include "../types/ades.h"
+
+
+#include "../utils/serializable.h"
 
 
 namespace ades {
 
-
-    class AdesDB
+    class AdesDB : public Serializable
     {
     private:
-        std::string home;
+        std::string home_;
 
-        std::vector<Ades> ades;
+        std::vector<Ades> ades_;
 
         bool populate();
 
         bool serialize();
 
     public:
-        AdesDB(std::string home_);
+        AdesDB(std::string home);
 
         ~AdesDB();
 
-        bool addAdes(std::vector<Ades> ades_);
+        std::string getHome() const
+        {
+            return home_;
+        }
 
-        bool removeAdesByName(std::string name);
+        void addAdes(std::vector<Ades> ades);
 
-        bool removeAdesByID(std::string id);
+        void removeAdesByName(std::string name);
 
-        Ades &updateAdesByName(std::string name);
+        void removeAdesByID(uint64_t id);
 
-        Ades &updateAdesByID(std::string id);
+        std::vector<Ades>::iterator updateAdesByName(std::string name);
+
+        std::vector<Ades>::iterator updateAdesByID(uint64_t id);
 
         std::vector<Ades>::const_iterator listAdes()
         {
-            return ades.cbegin();
+            return ades_.cbegin();
         }
 
         const Ades getAdesByName(std::string name);
 
-        const Ades getAdesByID(std::string id);
+        const Ades getAdesByID(uint64_t id);
+
+        void serialize(boost::archive::xml_oarchive oa, unsigned int version);
+
+        void deserialize(boost::archive::xml_iarchive ia, unsigned int version);
+
     };
 }
