@@ -71,8 +71,10 @@ target_link_libraries (
   ${ARMADILLO_LIBRARIES}
 )
 
-#message(WARNING lib${LIBRARY_NAME})
-#add_executable(populating_ades ${CMAKE_CURRENT_SOURCE_DIR}/examples/populating_ades.cpp)
-#target_link_libraries(populating_ades build/${LIBRARY_NAME})
+export(TARGETS ${LIBRARY_NAME} FILE "${PROJECT_BINARY_DIR}/ADEStargets.cmake")
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
+list(APPEND CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+# Adding example subdirectory
+add_subdirectory(examples)
 
 #install(TARGETS ${LIBRARY_NAME} DESTINATION /usr/local/lib)

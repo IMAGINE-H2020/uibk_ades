@@ -13,6 +13,8 @@ namespace ades {
             effectModels_(effectModels)
     {}
 
+    MotionSequence::~MotionSequence(){}
+
     void MotionSequence::insertInputTypes(const vector<string> inputTypes)
     {
         for(auto inputType : inputTypes) {
