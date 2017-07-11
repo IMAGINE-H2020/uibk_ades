@@ -17,7 +17,7 @@ namespace ades {
     class MotionSequence : public Serializable
     {
     private:
-        const uint64_t ID;
+        uint64_t ID;
         std::vector<std::string> inputTypes_;
         std::vector<const Motion*> motions_;
         std::map<std::string, mlpack::gmm::GMM> effectModels_;
@@ -30,7 +30,7 @@ namespace ades {
 
         ~MotionSequence();
 
-        const uint64_t getID()
+        uint64_t getID() const
         {
             return ID;
         }
@@ -39,9 +39,9 @@ namespace ades {
 
         void removeInputTypes(const std::vector<std::string> inputTypes);
 
-        std::vector<std::string>::const_iterator getInputTypes()
+        std::vector<std::string> getInputTypes() const
         {
-            return inputTypes_.cbegin();
+            return inputTypes_;
         }
 
         void insertMotion(const int step, const Motion *motion);
@@ -50,9 +50,9 @@ namespace ades {
 
         Motion const *modifyMotion(const int step);
 
-        std::vector<const Motion*>::const_iterator getMotions()
+        std::vector<const Motion*> getMotions() const
         {
-            return motions_.cbegin();
+            return motions_;
         }
 
         void insertEffectModel(const std::string effectType, mlpack::gmm::GMM dist);
@@ -61,9 +61,9 @@ namespace ades {
 
         void updateEffectModel(std::string effectType, std::vector<double> observation);
 
-        std::map<std::string, mlpack::gmm::GMM>::const_iterator getEffectModels()
+        std::map<std::string, mlpack::gmm::GMM> getEffectModels() const
         {
-            return effectModels_.cbegin();
+            return effectModels_;
         }
 
         double estimateParameterConfidence(const std::string effectType, std::vector<double> estimatedParameters);

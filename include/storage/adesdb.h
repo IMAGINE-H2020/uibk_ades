@@ -43,9 +43,9 @@ namespace ades {
 
         std::vector<Ades>::iterator updateAdesByID(uint64_t id);
 
-        std::vector<Ades>::const_iterator listAdes()
+        std::vector<Ades> listAdes() const
         {
-            return ades_.cbegin();
+            return ades_;
         }
 
         const Ades getAdesByName(std::string name);
