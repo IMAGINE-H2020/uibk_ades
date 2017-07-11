@@ -58,9 +58,9 @@ namespace ades {
 
         void modifyPreconditions(const std::map<std::string, std::string> conditions);
 
-        std::map<std::string, std::string>::const_iterator getPreconditions()
+        std::map<std::string, std::string> getPreconditions() const
         {
-            return preconditions_.cbegin();
+            return preconditions_;
         }
 
         void insertEffects(const std::map<std::string, std::string> effects);
@@ -69,9 +69,9 @@ namespace ades {
 
         void modifyEffects(const std::map<std::string, std::string> effects);
 
-        std::map<std::string, std::string>::const_iterator getEffects()
+        std::map<std::string, std::string> getEffects() const
         {
-            return effects_.cbegin();
+            return effects_;
         }
 
         std::string insertMotionSequence(const std::string motionSequenceID,
@@ -81,9 +81,9 @@ namespace ades {
 
         MotionSequence &modifyMotionSequence(const std::string motionSequenceID);
 
-        std::map<std::string, MotionSequence>::const_iterator getMotionSequences()
+        std::map<std::string, MotionSequence> getMotionSequences() const
         {
-            return motions_.cbegin();
+            return motions_;
         }
 
         void serialize(boost::archive::xml_oarchive oa, unsigned int version);
