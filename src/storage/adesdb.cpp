@@ -5,8 +5,9 @@ using namespace std;
 
 namespace ades {
 
-    AdesDB::AdesDB(string home) :
-        home_(home)
+    AdesDB::AdesDB(string home, unsigned int version) :
+        home_(home),
+        version_(version)
     {
         populate();
     }
@@ -77,15 +78,5 @@ namespace ades {
         auto lambda = [id] (const Ades &a) { return a.getID() == id;};
         auto elem = find_if(ades_.begin(), ades_.end(), lambda);
         return *elem;
-    }
-
-    void AdesDB::serialize(boost::archive::xml_oarchive oa, unsigned int version)
-    {
-
-    }
-
-    void AdesDB::deserialize(boost::archive::xml_iarchive ia, unsigned int version)
-    {
-
     }
 }
