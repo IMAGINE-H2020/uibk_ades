@@ -58,9 +58,9 @@ namespace ades {
 
         void modifyPreconditions(const std::map<std::string, std::string> conditions);
 
-        std::map<std::string, std::string>::const_iterator getPreconditions()
+        const std::map<std::string, std::string> getPreconditions()
         {
-            return preconditions_.cbegin();
+            return preconditions_;
         }
 
         void insertEffects(const std::map<std::string, std::string> effects);
@@ -69,9 +69,9 @@ namespace ades {
 
         void modifyEffects(const std::map<std::string, std::string> effects);
 
-        std::map<std::string, std::string>::const_iterator getEffects()
+        const std::map<std::string, std::string>::const_iterator getEffects()
         {
-            return effects_.cbegin();
+            return effects_;
         }
 
         std::string insertMotionSequence(const std::string motionSequenceID,
