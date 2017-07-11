@@ -5,41 +5,49 @@
 
 #include <iostream>
 #include "../include/types/ades.h"
+#include "../include/types/motion_sequence.h"
 
 using namespace ades;
+
+std::string const basic_color = "\033[97m";
+std::string const info_color = "\033[92m";
+std::string const error_color = "\033[31m";
+std::string const default_color = "\033[39m";
 
 std::string displayADESInfo(Ades & a)
 {
     std::stringstream output;
-    output << "ADES name : \033[32m" << a.getName() << "\033[39m" << std::endl;
+    output << basic_color << "ADES name : " << info_color << a.getName() << std::endl;
 
-    output << "ADES PC : \033[33m" << std::endl;
-    const std::map<std::string, std::string> ades_pc = a.getPreconditions();
-    if(ades_pc.empty()){ output<< "No PC defined yet"<< std::endl; }
+    output << basic_color << "ADES PC : " << info_color << std::endl;
+    auto ades_pc = a.getPreconditions();
+    if(ades_pc.empty()){ output << error_color << "No PC defined yet"<< std::endl; }
     else
     {
         for(auto apc_it = ades_pc.begin() ; apc_it != ades_pc.end() ; apc_it++)
         {
-           output << apc_it->first << ":-" << apc_it->second << std::endl;
+           output << "\t" << apc_it->first << ":-" << apc_it->second << "." << std::endl;
         }
     }
-    const std::map<std::string, std::string> ades_ef = a.getEffects();
-    output << "\033[39mADES effects : \033[33m" << std::endl;
-    if(ades_ef.empty()){ output<< "No Effects defined yet"<< std::endl; }
+    auto ades_ef = a.getEffects();
+    output << basic_color << "ADES effects : " << info_color << std::endl;
+    if(ades_ef.empty()){ output << error_color << "No Effects defined yet"<< std::endl; }
     else
     {
-        for(auto aef_it = ades_pc.begin() ; aef_it != ades_pc.end() ; aef_it++)
+        for(auto aef_it = ades_ef.begin() ; aef_it != ades_ef.end() ; aef_it++)
         {
-            output << aef_it->first << ":-" << aef_it->second << std::endl;
+            output << "\t" << aef_it->first << ":-" << aef_it->second << std::endl;
         }
     }
-    output << "\033[39mADES motion sequences : \033[33m" << std::endl;
-   // for(auto ams_it = a.getMotionSequences().begin() ; ams_it != a.getMotionSequences().end() ; ams_it++)
-   // {
-   //       output << ams_it->first << std::endl;
-   //       //output << ams_it->first << ":-" << (ams_it->second).getID() << std::endl;
-   // }
-
+    output << basic_color << "ADES motion sequences : " << info_color << std::endl;
+    auto ades_ms = a.getMotionSequences();
+    if(ades_ms.empty()){ output<< error_color <<  "Motion Sequences defined yet"<< std::endl; }
+    for(auto ams_it = ades_ms.begin() ; ams_it != ades_ms.end() ; ams_it++)
+    {
+          output << "\t" << ams_it->first << std::endl;
+          //output << ams_it->first << ":-" << (ams_it->second).getID() << std::endl;
+    }
+    output << default_color << "----------------------";
     return output.str();
 }
 
@@ -49,10 +57,23 @@ int main(int argc, char **argv)
     std::cout << displayADESInfo(fakeADES) << std::endl;
     fakeADES.setName("fakeLeverAction");
     std::cout << displayADESInfo(fakeADES) << std::endl;
+    
     // Let's insert a set of planner/categorical preconditions
     // here, the assumption is that preconditions are prolog-like statements, the :- is not explicit but embedded in the key-value separation
     std::map<std::string, std::string> fakePreConds;
     fakePreConds.insert(std::pair<std::string, std::string>("leverable(X)","(gap(X), reachable(X))"));
     fakeADES.insertPreconditions(fakePreConds);
     std::cout << displayADESInfo(fakeADES) << std::endl;
+    
+    // Let's insert a set of planner/categorical effects
+    std::map<std::string, std::string> fakeEffects;
+    fakeEffects.insert(std::pair<std::string, std::string>("levered(X)","(!gap(X))"));
+    fakeADES.insertEffects(fakeEffects);
+    std::cout << displayADESInfo(fakeADES) << std::endl;
+    
+    // Let's insert a motion sequence describing how to execute the action
+    //std::map<std::string, MotionSequence> fakeMotionSequence;
+    //fakeMotionSequence.insert(std::pair<std::string, std::string>("levered(X)","(!gap(X))"));
+    //fakeADES.insertEffects(fakeMotionSequence);
+    //std::cout << displayADESInfo(fakeADES) << std::endl;
 }
