@@ -69,7 +69,7 @@ namespace ades {
 
         void modifyEffects(const std::map<std::string, std::string> effects);
 
-        const std::map<std::string, std::string>::const_iterator getEffects()
+        const std::map<std::string, std::string> getEffects()
         {
             return effects_;
         }
@@ -81,9 +81,9 @@ namespace ades {
 
         MotionSequence &modifyMotionSequence(const std::string motionSequenceID);
 
-        std::map<std::string, MotionSequence>::const_iterator getMotionSequences()
+        const std::map<std::string, MotionSequence> getMotionSequences()
         {
-            return motions_.cbegin();
+            return motions_;
         }
 
         void serialize(boost::archive::xml_oarchive oa, unsigned int version);
