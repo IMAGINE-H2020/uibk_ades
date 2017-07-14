@@ -23,4 +23,14 @@ namespace ades {
         //TODO Does predicting a duration make sense?
         //TODO Talk to KIT
     };
+
+    class DMPContainer : public Motion
+    {
+        private:
+        public :
+            DMPContainer();
+            ~DMPContainer();
+            MotionType getMotionType(){ return MotionType::DMP; }
+    };
+
 }

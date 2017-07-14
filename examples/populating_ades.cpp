@@ -72,8 +72,13 @@ int main(int argc, char **argv)
     std::cout << displayADESInfo(fakeADES) << std::endl;
     
     // Let's insert a motion sequence describing how to execute the action
+    // 1st let's populate a simple motion_sequence
+    MotionSequence firstMotion;
+    std::string inputDimensions[] = {"target_position", "max_tool_force"};
+    std::vector<std::string> fakeInputTypes(inputDimensions, inputDimensions+sizeof(inputDimensions)/sizeof(std::string));
+    //// then add it the same way we add precondtions or effects :
     //std::map<std::string, MotionSequence> fakeMotionSequence;
-    //fakeMotionSequence.insert(std::pair<std::string, std::string>("levered(X)","(!gap(X))"));
+    //fakeMotionSequence.insert(std::pair<std::string, MotionSequence>("firstMotion",firstMotion));
     //fakeADES.insertEffects(fakeMotionSequence);
     //std::cout << displayADESInfo(fakeADES) << std::endl;
 }
