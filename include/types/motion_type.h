@@ -1,8 +1,13 @@
-#pragma once
+/*! \file */
 
+#pragma once
 
 namespace ades {
 
-    enum class MotionType {DMP, Cyclic, VisualServoing, PID};
+
+     /*! Enum defining the types of movement representations currently
+     *   support by libades.
+     */
+    enum class MotionType { DMP, Cyclic, VisualServoing, PID };
 
 }

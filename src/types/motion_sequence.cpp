@@ -18,7 +18,10 @@ namespace ades {
     void MotionSequence::insertInputTypes(const vector<string> inputTypes)
     {
         for(auto inputType : inputTypes) {
-            inputTypes_.push_back(inputType);
+            if(find(inputTypes_.begin(), inputTypes_.end(), inputType) != inputTypes_.end())
+            {
+                inputTypes_.push_back(inputType);
+            }
         }
     }
 
@@ -44,7 +47,7 @@ namespace ades {
 
     Motion const *MotionSequence::modifyMotion(const int step)
     {
-        return motions_.at(step);
+        return &(motions_.at(step));
     }
 
     void MotionSequence::insertEffectModel(const string effectType, mlpack::gmm::GMM dist)

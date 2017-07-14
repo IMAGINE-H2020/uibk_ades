@@ -23,7 +23,7 @@ namespace ades {
     {
         for(auto cond : conditions)
         {
-            auto ret = preconditions_.insert(pair<string, string>(cond.first, cond.second));
+            preconditions_.insert(pair<string, string>(cond.first, cond.second));
         }
     }
 
@@ -55,8 +55,7 @@ namespace ades {
     {
         for(auto effect : effects)
         {
-            
-            auto ret = effects_.insert(pair<string, string>(effect.first, effect.second));
+            effects_.insert(pair<string, string>(effect.first, effect.second));
         }
     }
 
@@ -82,6 +81,23 @@ namespace ades {
             effects_.erase(effect.first);
             effects_.insert(pair<string, string>(effect.first, effect.second));
         }
+    }
+
+
+    void Ades::insertMotionSequence(const std::string motionSequenceID,
+                                    const MotionSequence motionSequence)
+    {
+        motions_.insert(pair<string, MotionSequence>(motionSequenceID, motionSequence));
+    }
+
+    void Ades::removeMotionSequence(const std::string motionSequenceID)
+    {
+        motions_.erase(motionSequenceID);
+    }
+
+    MotionSequence *Ades::modifyMotionSequence(const std::string motionSequenceID)
+    {
+        return &(motions_.at(motionSequenceID));
     }
 
     void Ades::serialize(boost::archive::xml_oarchive oa, const unsigned int version)
