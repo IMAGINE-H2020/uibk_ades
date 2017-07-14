@@ -32,7 +32,7 @@ namespace ades {
         virtual void setTemporalScale(float scaling = 1.0) const = 0;
 
 
-        /*! Return the type of this motion (see MotionType)
+        /*! Return the type of this motion (see MotionType )
          *  \return the type of this motion
          */
         virtual MotionType getMotionType() const = 0;
