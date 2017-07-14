@@ -47,7 +47,7 @@ namespace ades {
 
     Motion const *MotionSequence::modifyMotion(const int step)
     {
-        return &(motions_.at(step));
+        return motions_.at(step);
     }
 
     void MotionSequence::insertEffectModel(const string effectType, mlpack::gmm::GMM dist)

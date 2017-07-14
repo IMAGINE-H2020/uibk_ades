@@ -19,7 +19,7 @@ namespace ades {
     private:
         uint64_t ID;
         std::vector<std::string> inputTypes_;
-        std::vector<Motion> motions_;
+        std::vector<const Motion*> motions_;
         std::map<std::string, mlpack::gmm::GMM> effectModels_;
 
 
@@ -90,7 +90,7 @@ namespace ades {
         /*! Return the current list of motions.
          *  \return a vector of <const Motion> containing all input types
          */
-        std::vector<Motion> getMotions() const
+        std::vector<const Motion*> getMotions() const
         {
             return motions_;
         }
