@@ -27,6 +27,11 @@ namespace ades {
 
 
     public:
+        /* Constructor for type ades::Ades.
+        *\param preconditions : map of <string, string> storing symbolic precondition descriptions in a Prolog-like style; e.g., <head, body>
+        *\param effects : map of <string, string> storing symbolic effect descriptions in a Prolog-like style; e.g., <head, body>
+        *\param motions : map of <string, MotionSequence> storing subsymbolic motion sequences (see Motion and MotionSequence for more information)
+        */
         Ades(std::string name,
              std::map<std::string, std::string> preconditions = std::map<std::string, std::string>(),
              std::map<std::string, std::string> effects = std::map<std::string, std::string>(),
@@ -51,10 +56,14 @@ namespace ades {
             name_ = name;
         }
 
+        /* Add a set of new preconditions to this Ades. Existing preconditions will be ignored.
+         *\param conditions : map of <string, string> storing symbolic precondition descriptions in a Prolog-like style; e.g., <head, body>
+         */
         void insertPreconditions(const std::map<std::string, std::string> conditions);
 
-        //if empty, remove all, otherwise what's contained
-        void removePreconditions(const std::vector<std::string> conditions);
+        /* Remove the preconditions whose head appears in conditions. If conditions is empty, remove all preconditions.
+         */
+        void removePreconditions(const std::vector<std::string> conditions = std::vector<std::string>());
 
         void modifyPreconditions(const std::map<std::string, std::string> conditions);
 
@@ -63,9 +72,14 @@ namespace ades {
             return preconditions_;
         }
 
+        /* Add a set of effects to this Ades. Existing effects will be ignored.
+        *\param effects : map of <string, string> storing symbolic effect descriptions in a Prolog-like style; e.g., <head, body>
+          */
         void insertEffects(const std::map<std::string, std::string> effects);
 
-        void removeEffects(const std::vector<std::string> effects);
+        /* Remove the effects whose head appears in conditions. If effects is empty, remove all effects.
+         * */
+        void removeEffects(const std::vector<std::string> effects = std::vector<std::string>());
 
         void modifyEffects(const std::map<std::string, std::string> effects);
 
@@ -74,6 +88,9 @@ namespace ades {
             return effects_;
         }
 
+        /*
+         * *\param motions : map of <string, MotionSequence> storing subsymbolic motion sequences (see Motion and MotionSequence for more information)
+         * */
         std::string insertMotionSequence(const std::string motionSequenceID,
                                          const MotionSequence motionSequence);
 

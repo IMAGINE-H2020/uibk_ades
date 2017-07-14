@@ -23,15 +23,22 @@ namespace ades {
     {
         for(auto cond : conditions)
         {
-            preconditions_.insert(pair<string, string>(cond.first, cond.second));
+            auto ret = preconditions_.insert(pair<string, string>(cond.first, cond.second));
         }
     }
 
     void Ades::removePreconditions(const vector<string> conditions)
     {
-        for(auto cond : conditions)
+        if(conditions.empty())
         {
-            preconditions_.erase(cond);
+            preconditions_.clear();
+        }
+        else
+        {
+            for(auto cond : conditions)
+            {
+                preconditions_.erase(cond);
+            }
         }
     }
 
@@ -48,15 +55,23 @@ namespace ades {
     {
         for(auto effect : effects)
         {
-            effects_.insert(pair<string, string>(effect.first, effect.second));
+            
+            auto ret = effects_.insert(pair<string, string>(effect.first, effect.second));
         }
     }
 
     void Ades::removeEffects(const vector<string> effects)
     {
-        for(auto effect : effects)
+        if(effects.empty())
         {
-            effects_.erase(effect);
+            effects_.clear();
+        }
+        else
+        {
+            for(auto effect : effects)
+            {
+                effects_.erase(effect);
+            }
         }
     }
 
