@@ -106,4 +106,9 @@ if(DOXYGEN_FOUND)
         )
 endif(DOXYGEN_FOUND)
 
+message(STATUS "Depending on your eigen installation, you may have to create symbolic links so let Eigen/Dense be found at runtime :
+    cd <your/path/to/eigen>
+    sudo ln -sf eigen3/Eigen Eigen
+    sudo ln -sf eigen3/unsupported unsupported")
+
 #install(TARGETS ${LIBRARY_NAME} DESTINATION /usr/local/lib)
