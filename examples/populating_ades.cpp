@@ -76,12 +76,16 @@ int main(int argc, char **argv)
     
     // Let's insert a motion sequence describing how to execute the action
     // 1st let's populate a simple motion_sequence
-    MotionSequence firstMotion;
+    MotionSequence firstMotionSequence;
+    // Input dimensions to consider :
     std::string inputDimensions[] = {"target_position", "max_tool_force"};
     std::vector<std::string> fakeInputTypes(inputDimensions, inputDimensions+sizeof(inputDimensions)/sizeof(std::string));
+    // List of motions :
+    DMPContainer fakeDMP = DMPContainer();
     //// then add it the same way we add precondtions or effects :
     //std::map<std::string, MotionSequence> fakeMotionSequence;
     //fakeMotionSequence.insert(std::pair<std::string, MotionSequence>("firstMotion",firstMotion));
     //fakeADES.insertEffects(fakeMotionSequence);
-    //std::cout << displayADESInfo(fakeADES) << std::endl;
+    //MotionSequence secondMotionSequence(fakeInputTypes, );
+    std::cout << displayADESInfo(fakeADES) << std::endl;
 }
