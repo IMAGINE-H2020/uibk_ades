@@ -13,7 +13,28 @@ namespace ades {
      */
     class Motion : public Serializable
     {
+    
+    private:
+       /*! user-defined name 
+        * */    
+        std::string name_;
+
     public:
+
+        Motion(std::string name) : name_(name){}
+
+        ~Motion(){}
+        
+        std::string getName()
+        {
+            return name_;
+        }
+
+        void setName(std::string name)
+        {
+            name_ = name;
+        }
+
         /*! Return the motion parameters associated with this motion representation.
          *  \return a vector of <string, vector> listing the motion parameters and their values
          */
