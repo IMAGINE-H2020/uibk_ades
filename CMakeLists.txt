@@ -28,6 +28,24 @@ if(NOT MLPACK_LIBRARY)
 endif()
 
 
+find_path(LIBGP_INCLUDE_DIR
+  NAMES gp.h
+  PATHS /usr/local/include/gp/
+)
+if(NOT LIBGP_INCLUDE_DIR)
+  message(FATAL_ERROR "LIBGP_INCLUDE_DIR not found!")
+endif()
+
+
+find_library(LIBGP_LIBRARY
+  NAMES libgp.a
+  PATHS /usr/local/lib/
+)
+if(NOT LIBGP_LIBRARY)
+  message(FATAL_ERROR "LIBGP_LIBRARY not found!")
+endif()
+
+
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/include
   ${Boost_INCLUDE_DIR}
@@ -68,6 +86,7 @@ target_link_libraries (
   ${LIBRARY_NAME}
   ${Boost_LIBRARIES}
   ${MLPACK_LIBRARY}
+  ${LIBGP_LIBRARY}
   ${ARMADILLO_LIBRARIES}
 )
 

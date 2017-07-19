@@ -6,11 +6,13 @@ namespace ades {
 
     MotionSequence::MotionSequence(vector<string> inputTypes,
                                    vector<const Motion*> motions,
-                                   map<string, mlpack::gmm::GMM> effectModels
+                                   map<string, mlpack::gmm::GMM> gmm_effectModels,
+                                   map<string, libgp::GaussianProcess> gp_effectModels
         ) : ID(reinterpret_cast<uint64_t>(&inputTypes)),
             inputTypes_(inputTypes),
             motions_(motions),
-            effectModels_(effectModels)
+            gmm_effectModels_(gmm_effectModels),
+            gp_effectModels_(gp_effectModels)
     {}
 
     MotionSequence::~MotionSequence(){}
@@ -50,26 +52,56 @@ namespace ades {
         return motions_.at(step);
     }
 
-    void MotionSequence::insertEffectModel(const string effectType, mlpack::gmm::GMM dist)
+    void MotionSequence::insertGMMEffectModel(const string effectType, mlpack::gmm::GMM dist)
     {
-        effectModels_.insert(pair<string, mlpack::gmm::GMM>(effectType, dist));
+        gmm_effectModels_.insert(pair<string, mlpack::gmm::GMM>(effectType, dist));
     }
 
-    void MotionSequence::removeEffectModel(const string effectType)
+    void MotionSequence::removeGMMEffectModel(const string effectType)
     {
-        effectModels_.erase(effectType);
+        gmm_effectModels_.erase(effectType);
     }
 
-    void MotionSequence::updateEffectModel(string effectType, vector<double> observation)
+    void MotionSequence::updateGMMEffectModel(string effectType, vector<double> input, double effect)
     {
-        arma::mat observation_(observation);
-        effectModels_.at(effectType).Train(observation_, 1, true);
+        input.push_back(effect);
+        arma::mat input_(input);
+        gmm_effectModels_.at(effectType).Train(input, 1, true);
     }
 
-    double MotionSequence::estimateParameterConfidence(const std::string effectType, std::vector<double> estimatedParameters)
+    void MotionSequence::insertGPEffectModel(const string effectType, libgp::GaussianProcess dist)
     {
-        arma::vec estimatedParameters_(estimatedParameters);
-        return effectModels_.at(effectType).Probability(estimatedParameters_);
+        gp_effectModels_.insert(pair<string, libgp::GaussianProcess>(effectType, dist));
+    }
+
+    void MotionSequence::removeGPEffectModel(const string effectType)
+    {
+        gp_effectModels_.erase(effectType);
+    }
+
+    void MotionSequence::updateGPEffectModel(string effectType, vector<double> input, double effect)
+    {
+        double* input_ = &input[0];
+        gp_effectModels_.at(effectType).add_pattern(input_, effect);
+    }
+
+    double MotionSequence::estimateEffectLikelihood(const std::string effectType, std::vector<double> input, double effect)
+    {
+        input.push_back(effect);
+        arma::vec input_(input);
+        return gmm_effectModels_.at(effectType).Probability(input_);
+    }
+
+    double MotionSequence::estimateEffect(const std::string effectType, std::vector<double> input)
+    {
+        double const* input_ = &input[0];
+        return gp_effectModels_.at(effectType).f(input_);
+    }
+
+    double MotionSequence::estimateEffectVariance(const std::string effectType, std::vector<double> input)
+    {
+        double const* input_ = &input[0];
+        return gp_effectModels_.at(effectType).var(input_);
     }
 
     void MotionSequence::serialize(boost::archive::xml_oarchive oa, const unsigned int version)

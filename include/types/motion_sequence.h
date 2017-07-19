@@ -6,6 +6,8 @@
 #include <mlpack/core.hpp>
 #include <mlpack/methods/gmm/gmm.hpp>
 #include <armadillo>
+#include <gp/gp.h>
+#include <gp/gp_utils.h>
 
 
 #include "motion.h"
@@ -20,7 +22,8 @@ namespace ades {
         uint64_t ID;
         std::vector<std::string> inputTypes_;
         std::vector<const Motion*> motions_;
-        std::map<std::string, mlpack::gmm::GMM> effectModels_;
+        std::map<std::string, mlpack::gmm::GMM> gmm_effectModels_;
+        std::map<std::string, libgp::GaussianProcess> gp_effectModels_;
 
 
     public:
@@ -28,12 +31,15 @@ namespace ades {
          *  \param inputTypes : vector of <string> specifying required parameters for this motion
          *                      sequence by name
          *  \param motions : vector of <Motion*> specifying a squence of motions (see Motion)
-         *  \param effectModels : map of <string, mlpack::gmm::GMM> specifying probabilistic effect
+         *  \param gmm_effectModels : map of <string, mlpack::gmm::GMM> specifying joint probabilistic effect
          *                        models using GMMs
+         *  \param gp_effectModels : map of <string, libgp::GaussianProcess> specifying conditional
+                                     probabilistic effect models using GPs
          */
         MotionSequence(std::vector<std::string> inputTypes = std::vector<std::string>(),
                        std::vector<const Motion*> motions = std::vector<const Motion*>(),
-                       std::map<std::string, mlpack::gmm::GMM> effectModels = std::map<std::string, mlpack::gmm::GMM>());
+                       std::map<std::string, mlpack::gmm::GMM> gmm_effectModels = std::map<std::string, mlpack::gmm::GMM>(),
+                       std::map<std::string, libgp::GaussianProcess> gp_effectModels = std::map<std::string, libgp::GaussianProcess>());
 
         ~MotionSequence();
 
@@ -100,42 +106,92 @@ namespace ades {
          *  \param effectType : an effect of <string> for which to add a model
          *  \param dist : the effect model
          */
-        void insertEffectModel(const std::string effectType, mlpack::gmm::GMM dist);
+        void insertGMMEffectModel(const std::string effectType, mlpack::gmm::GMM dist);
 
 
         /*! Remove the specifed effect model (specified by effectType) from this motion sequence.
          *  \param effectType : an effect of <string> for which to remove a model
          */
-        void removeEffectModel(const std::string effectType);
+        void removeGMMEffectModel(const std::string effectType);
 
 
         /*! Updates the effect model for the specified effect type using a new observation.
          *  \param effectType : an effect of <string> for which to remove a model
-         *  \param observation :  a vector of <double> containing a new observation
+         *  \param input: a vector of <double> specifying the input parameters
+         *  \param effect: a <double> specifying the desired effect
          */
-        void updateEffectModel(std::string effectType, std::vector<double> observation);
+        void updateGMMEffectModel(std::string effectType, std::vector<double> input, double effect);
 
 
         /*! Return the current list of effect models.
          *  \return a map of <string, mlpack::gmm::GMM> listing all effect types with
          *          their associated model
          */
-        std::map<std::string, mlpack::gmm::GMM> getEffectModels() const
+        std::map<std::string, mlpack::gmm::GMM> getGMMEffectModels() const
         {
-            return effectModels_;
+            return gmm_effectModels_;
         }
 
 
-        /*! Estimate the confidence of parameters in terms of specific effect, i.e.,
+         /*! Add an effect model to this motion sequence for the specified effect.
+         *  \param effectType : an effect of <string> for which to add a model
+         *  \param dist : the effect model
+         */
+        void insertGPEffectModel(const std::string effectType, libgp::GaussianProcess dist);
+
+
+        /*! Remove the specifed effect model (specified by effectType) from this motion sequence.
+         *  \param effectType : an effect of <string> for which to remove a model
+         */
+        void removeGPEffectModel(const std::string effectType);
+
+
+        /*! Updates the effect model for the specified effect type using a new observation.
+         *  \param effectType : an effect of <string> for which to remove a model
+         *  \param input: a vector of <double> specifying the input parameters
+         *  \param effect: a <double> specifying the desired effect
+         */
+        void updateGPEffectModel(std::string effectType, std::vector<double> input, double effect);
+
+
+        /*! Return the current list of effect models.
+         *  \return a map of <string, libgp::GaussianProcess> listing all effect types with
+         *          their associated model
+         */
+        std::map<std::string, libgp::GaussianProcess> getGPEffectModels() const
+        {
+            return gp_effectModels_;
+        }
+
+
+        /*! Estimate the confidence of parameters in terms of a specific effect, i.e.,
          *  do these parameters yield the expected effect.
          *  \param effectType : an effect of <string> for which to estimate the confidence
-            \param estimatedParameters: a vector of <double> specifying the parameters for
-                                        which to estimate the cofidence for a desired effect
+            \param input: a vector of <double> specifying the input parameters
+            \param effect: a <double> specifying the desired effect
             \return the confidence that these parameters yield the desired effect
          */
-        double estimateParameterConfidence(const std::string effectType, std::vector<double> estimatedParameters);
+        double estimateEffectLikelihood(const std::string effectType, std::vector<double> input, double effect);
+
+
+        /*! Estimate the mean effect given input parameters.
+         *  \param effectType : an effect of <string> for which to estimate the confidence
+            \param input: a vector of <double> specifying the input parameters
+            \return the estimated effect
+         */
+        double estimateEffect(const std::string effectType, std::vector<double> input);
+
+
+        /*! Estimate the variance of an effect given input parameters.
+         *  \param effectType : an effect of <string> for which to estimate the confidence
+            \param input: a vector of <double> specifying the input parameters
+            \return the estimated effect
+         */
+        double estimateEffectVariance(const std::string effectType, std::vector<double> input);
+
 
         void serialize(boost::archive::xml_oarchive oa, unsigned int version);
+
 
         void deserialize(boost::archive::xml_iarchive ia, unsigned int version);
 
