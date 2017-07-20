@@ -15,21 +15,21 @@ namespace ades {
     class Motion : public Serializable
     {
     
-    private:
-       /*! user-defined name 
+//    private:
+    protected:
+        float temporalScale;
+        /*! user-defined name 
         * */    
         std::string name_;
 
-    protected:
-        float temporalScale;
 
     public:
 
-        Motion(std::string name="") : name_(name){}
+        Motion(std::string name="", float scaling=1.0) : name_(name), temporalScale(scaling){}
 
         ~Motion(){}
         
-        std::string getName()
+        std::string getName() const
         {
             return name_;
         }
@@ -42,7 +42,7 @@ namespace ades {
         /*! Return the motion parameters associated with this motion representation.
          *  \return a vector of <string, vector> listing the motion parameters and their values
          */
-        virtual std::map<std::string, std::vector<std::vector<double>>> getMotionParameters() const = 0;
+        virtual std::map<std::string, std::vector<double>> getMotionParameters() const = 0;
 
 
         /*! Check whether this motion representation is temporally scalable.
@@ -71,7 +71,7 @@ namespace ades {
             std::vector<double> gaussianCenters;
             std::vector<double> gaussianVariances;
             std::vector<double> weights;
-            std::vector<double> dmp_coeffs;
+            std::vector<double> dmpCoeffs;
             // dmp coeffs ordered as tau, alpha_z, beta_z, alpha_g, see dmp definition:
 
         public:
@@ -84,14 +84,23 @@ namespace ades {
                 gaussianCenters = gC; 
                 gaussianVariances = gV;
                 weights = w;
-                dmp_coeffs = coeffs;
+                dmpCoeffs = coeffs;
             }
+
+            DMPContainer(const DMPContainer & d) :
+                gaussianCenters(d.gaussianCenters),
+                gaussianVariances(d.gaussianVariances),
+                weights(d.weights),
+                dmpCoeffs(d.dmpCoeffs)
+           {}
 
             ~DMPContainer(){}
             
-            std::map<std::string, std::vector<std::vector<double>>> getMotionParameters() const;
+            std::map<std::string, std::vector<double>> getMotionParameters() const;
             bool isTemporallyScalable() const;
             
+            float getTemporalScale(){ return temporalScale; }
+
             void setTemporalScale(float scaling = 1.0);
 
             MotionType getMotionType() const;
