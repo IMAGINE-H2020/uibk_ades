@@ -102,6 +102,13 @@ namespace ades {
         }
 
 
+        /*! Add an effect model by providing the parameters of the GMM.
+         *  \param effectType : an effect of <string> for which to add a model
+         *  \param gaussiansNb : number of gaussians to use in the GMM (effect model)
+         *  \param gaussiansDim : dimensionality of gaussians to use in the GMM (effect model)
+         */
+        void insertGMMEffectModel(const std::string effectType, int gaussiansNb, int gaussiansDim);
+
         /*! Add an effect model to this motion sequence for the specified effect.
          *  \param effectType : an effect of <string> for which to add a model
          *  \param dist : the effect model
@@ -131,6 +138,12 @@ namespace ades {
         {
             return gmm_effectModels_;
         }
+
+         /*! Add an effect model from GP parameters to this  motion sequence for the specified effect.
+         *  \param effectType : an effect of <string> for which to add a model
+         *  \param dist : the effect 
+         */
+        void insertGPEffectModel(const std::string effectType, int gpDim, std::string covf);
 
 
          /*! Add an effect model to this motion sequence for the specified effect.

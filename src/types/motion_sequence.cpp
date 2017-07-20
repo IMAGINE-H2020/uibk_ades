@@ -19,8 +19,10 @@ namespace ades {
 
     void MotionSequence::insertInputTypes(const vector<string> inputTypes)
     {
-        for(auto inputType : inputTypes) {
-            if(find(inputTypes_.begin(), inputTypes_.end(), inputType) != inputTypes_.end())
+        for(auto inputType : inputTypes)
+        {
+            // If the input has NOT been found (thus find return end() of inputtypes)
+            if(find(inputTypes_.begin(), inputTypes_.end(), inputType) == inputTypes_.end())
             {
                 inputTypes_.push_back(inputType);
             }
@@ -52,6 +54,13 @@ namespace ades {
         return motions_.at(step);
     }
 
+    void MotionSequence::insertGMMEffectModel(const string effectType, int gaussiansNb, int gaussiansDim)
+    {
+        // gaussiansDim + 1 because the effect are an input of the model
+        mlpack::gmm::GMM newDist(gaussiansNb, gaussiansDim+1);
+        gmm_effectModels_.insert(pair<string, mlpack::gmm::GMM>(effectType, newDist));
+    }
+    
     void MotionSequence::insertGMMEffectModel(const string effectType, mlpack::gmm::GMM dist)
     {
         gmm_effectModels_.insert(pair<string, mlpack::gmm::GMM>(effectType, dist));
@@ -67,6 +76,12 @@ namespace ades {
         input.push_back(effect);
         arma::mat input_(input);
         gmm_effectModels_.at(effectType).Train(input, 1, true);
+    }
+
+    void MotionSequence::insertGPEffectModel(const std::string effectType, int gpDim, std::string covf)
+    {
+        libgp::GaussianProcess newgp(gpDim, covf);
+        gp_effectModels_.insert(pair<string, libgp::GaussianProcess>(effectType, newgp));
     }
 
     void MotionSequence::insertGPEffectModel(const string effectType, libgp::GaussianProcess dist)
