@@ -12,6 +12,7 @@
 
 #include "motion.h"
 #include "../utils/serializable.h"
+#include <boost/serialization/list.hpp>
 
 
 namespace ades {
@@ -203,10 +204,10 @@ namespace ades {
         double estimateEffectVariance(const std::string effectType, std::vector<double> input);
 
 
-        void serialize(boost::archive::xml_oarchive oa, unsigned int version);
+        void serialize(boost::archive::xml_oarchive & oa, unsigned int version);
 
 
-        void deserialize(boost::archive::xml_iarchive ia, unsigned int version);
+        void deserialize(boost::archive::xml_iarchive & ia, unsigned int version);
 
     };
 }
