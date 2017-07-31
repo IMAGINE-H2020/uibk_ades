@@ -12,6 +12,8 @@ message(STATUS "Lib path : " ${LIB_FILES})
 message(STATUS "build path : " ${CMAKE_BINARY_DIR})
 add_executable(populating_ades populating_ades.cpp)
 target_link_libraries(populating_ades LINK_PUBLIC ${LIBRARY_NAME})
+add_executable(save_load_ades save_load_ades.cpp)
+target_link_libraries(save_load_ades LINK_PUBLIC ${LIBRARY_NAME})
 #target_link_libraries(populating_ades ${CMAKE_BINARY_DIR}/lib${LIBRARY_NAME})
 #message(STATUS "path to so:" ${CMAKE_BINARY_DIR}/${LIBRARY_NAME})
 

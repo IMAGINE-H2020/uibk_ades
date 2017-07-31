@@ -7,7 +7,7 @@
 #include "motion_type.h"
 #include "../utils/serializable.h"
 #include <boost/serialization/list.hpp>
-
+#include <boost/serialization/export.hpp>
 
 namespace ades {
 
@@ -64,7 +64,11 @@ namespace ades {
         //TODO Does predicting a duration make sense?
         //TODO Talk to KIT
     };
+}
 
+BOOST_SERIALIZATION_ASSUME_ABSTRACT( ades::Motion );
+
+namespace ades {
     class DMPContainer : public Motion
     {
         private:
@@ -110,4 +114,7 @@ namespace ades {
             void deserialize(boost::archive::xml_iarchive & ia, const unsigned int version);
     };
 
+
 }
+    
+//BOOST_CLASS_EXPORT_GUID( ades::DMPContainer, "DMPContainer");

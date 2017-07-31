@@ -22,6 +22,8 @@ bool DMPContainer::isTemporallyScalable() const { return true; }
 
 void DMPContainer::serialize(boost::archive::xml_oarchive & oa, const unsigned int version)
 {
+    oa & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Motion);
+
     oa & BOOST_SERIALIZATION_NVP(temporalScale);
     oa & BOOST_SERIALIZATION_NVP(name_);
 
