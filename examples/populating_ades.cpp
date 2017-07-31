@@ -107,7 +107,7 @@ int main(int argc, char **argv)
     // Let's insert a set of planner/categorical preconditions
     // here, the assumption is that preconditions are prolog-like statements, the :- is not explicit but embedded in the key-value separation
     std::map<std::string, std::string> fakePreConds;
-    fakePreConds.insert(std::pair<std::string, std::string>("leverable(X)","(gap(X), reachable(X))"));
+    fakePreConds.insert(std::pair<std::string, std::string>("leverable(X)","gap(X), reachable(X)"));
     fakeADES.insertPreconditions(fakePreConds);
     std::cout << displayADESInfo(fakeADES) << std::endl;
     
@@ -116,7 +116,7 @@ int main(int argc, char **argv)
     
     // Let's insert a set of planner/categorical effects
     std::map<std::string, std::string> fakeEffects;
-    fakeEffects.insert(std::pair<std::string, std::string>("levered(X)","(!gap(X))"));
+    fakeEffects.insert(std::pair<std::string, std::string>("levered(X)","\\+ gap(X)"));
     fakeADES.insertEffects(fakeEffects);
     std::cout << displayADESInfo(fakeADES) << std::endl;
     
