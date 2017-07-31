@@ -119,12 +119,18 @@ namespace ades {
         return gp_effectModels_.at(effectType).var(input_);
     }
 
-    void MotionSequence::serialize(boost::archive::xml_oarchive oa, const unsigned int version)
+    void MotionSequence::serialize(boost::archive::xml_oarchive & oa, const unsigned int version)
     {
-
+        //oa.template register_type<Motion>();
+        oa & BOOST_SERIALIZATION_NVP(ID);
+        oa & BOOST_SERIALIZATION_NVP(inputTypes_);
+        //for(auto it : motions_)
+        //{
+        //    //oa & BOOST_SERIALIZATION_NVP(it);
+        //}
     }
 
-    void MotionSequence::deserialize(boost::archive::xml_iarchive ia, const unsigned int version)
+    void MotionSequence::deserialize(boost::archive::xml_iarchive & ia, const unsigned int version)
     {
         //mlpack allows serializing/deserializing models
     }

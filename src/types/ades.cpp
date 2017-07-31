@@ -100,12 +100,16 @@ namespace ades {
         return &(motions_.at(motionSequenceID));
     }
 
-    void Ades::serialize(boost::archive::xml_oarchive oa, const unsigned int version)
+    void Ades::serialize(boost::archive::xml_oarchive & oa, const unsigned int version)
     {
-
+        oa & BOOST_SERIALIZATION_NVP(ID);
+        oa & BOOST_SERIALIZATION_NVP(name_);
+        oa & BOOST_SERIALIZATION_NVP(preconditions_);
+        oa & BOOST_SERIALIZATION_NVP(effects_);
+        oa & BOOST_SERIALIZATION_NVP(motions_);
     }
 
-    void Ades::deserialize(boost::archive::xml_iarchive ia, const unsigned int version)
+    void Ades::deserialize(boost::archive::xml_iarchive & ia, const unsigned int version)
     {
 
     }
