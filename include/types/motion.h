@@ -6,6 +6,7 @@
 
 #include "motion_type.h"
 #include "../utils/serializable.h"
+#include <boost/serialization/list.hpp>
 
 
 namespace ades {
@@ -15,7 +16,6 @@ namespace ades {
     class Motion : public Serializable
     {
     
-//    private:
     protected:
         float temporalScale;
         /*! user-defined name 
@@ -105,9 +105,9 @@ namespace ades {
 
             MotionType getMotionType() const;
 
-            void serialize(boost::archive::xml_oarchive oa, const unsigned int version);
+            void serialize(boost::archive::xml_oarchive & oa, const unsigned int version);
 
-            void deserialize(boost::archive::xml_iarchive ia, const unsigned int version);
+            void deserialize(boost::archive::xml_iarchive & ia, const unsigned int version);
     };
 
 }
