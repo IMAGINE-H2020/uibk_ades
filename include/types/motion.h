@@ -63,6 +63,9 @@ namespace ades {
 
         //TODO Does predicting a duration make sense?
         //TODO Talk to KIT
+
+        //void serialize(boost::archive::xml_oarchive & oa, const unsigned int version){ std::cout << "Virtual bananas" << std::endl; }
+        //void deserialize(boost::archive::xml_iarchive & ia, const unsigned int version){}
     };
 }
 
@@ -117,4 +120,4 @@ namespace ades {
 
 }
     
-//BOOST_CLASS_EXPORT_GUID( ades::DMPContainer, "DMPContainer");
+//BOOST_CLASS_EXPORT( ades::DMPContainer);

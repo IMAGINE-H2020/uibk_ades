@@ -2,6 +2,7 @@
 
 using namespace ades;
 
+
 std::map<std::string, std::vector<double>> DMPContainer::getMotionParameters() const
 {
     std::map<std::string, std::vector<double>> params;
@@ -22,7 +23,10 @@ bool DMPContainer::isTemporallyScalable() const { return true; }
 
 void DMPContainer::serialize(boost::archive::xml_oarchive & oa, const unsigned int version)
 {
+    std::cout << "Motion serialization" << std::endl;
+
     oa & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Motion);
+    std::cout << "Added Motion base class" << std::endl;
 
     oa & BOOST_SERIALIZATION_NVP(temporalScale);
     oa & BOOST_SERIALIZATION_NVP(name_);

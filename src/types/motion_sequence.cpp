@@ -1,4 +1,5 @@
 #include "../../include/types/motion_sequence.h"
+//#include "../../include/utils/boost_exports.h"
 
 using namespace std;
 
@@ -121,11 +122,15 @@ namespace ades {
 
     void MotionSequence::serialize(boost::archive::xml_oarchive & oa, const unsigned int version)
     {
+        oa.template register_type<DMPContainer>();
+
         oa & BOOST_SERIALIZATION_NVP(ID);
         oa & BOOST_SERIALIZATION_NVP(inputTypes_);
         
         for(auto it : motions_)
+        //for(std::vector<Motion*>::iterator it = motions_.begin() ; it != motions_.end() ; it++)
         {
+            std::cout << "log : " << it->isTemporallyScalable() << std::endl;
             oa & BOOST_SERIALIZATION_NVP(it);
         }
     }
