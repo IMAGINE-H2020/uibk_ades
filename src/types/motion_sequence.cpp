@@ -131,7 +131,8 @@ namespace ades {
         //for(std::vector<Motion*>::iterator it = motions_.begin() ; it != motions_.end() ; it++)
         {
             std::cout << "log : " << it->isTemporallyScalable() << std::endl;
-            oa & BOOST_SERIALIZATION_NVP(it);
+            // Commenting motion serialization until finding a solution to the segfautl
+            // oa & BOOST_SERIALIZATION_NVP(it);
         }
     }
 
