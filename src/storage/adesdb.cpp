@@ -33,6 +33,16 @@ namespace ades {
     bool AdesDB::serialize()
     {
         //save data
+        std::string db_file = home_+"/database"+std::to_string(version_)+".xml";
+        std::ofstream ofs(db_file);
+        boost::archive::xml_oarchive oa(ofs);
+        oa << BOOST_SERIALIZATION_NVP(ades_);
+        ofs.close();
+
+        //for(auto a : ades_)
+        //{
+        //    oa << BOOST_SERIALIZARION_NVP(A);
+        //}
         return true;
     }
 

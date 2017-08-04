@@ -109,7 +109,7 @@ int main(int argc, char **argv)
     Ades fakeADES2 = Ades("loadedAdes2");
     Ades fakeADES3 = Ades("loadedAdes3");
 
-    AdesDB database = AdesDB("./serializedADES", 0);
+    AdesDB database = AdesDB("./databaseADES", 0);
 
     // Serializing ADES :
     std::string ades_fn = "./serializedADES/fakeADES0.xml";
