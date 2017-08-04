@@ -38,6 +38,11 @@ namespace ades {
         }
 
 
+        int getAdesNb()
+        {
+            return ades_.size();
+        }
+
         /*! Adds a set of Ades to this AdesDB.
          *  \param ades : a vector of <Ades> to be added
          */

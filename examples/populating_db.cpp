@@ -109,14 +109,33 @@ int main(int argc, char **argv)
     Ades fakeADES2 = Ades("loadedAdes2");
     Ades fakeADES3 = Ades("loadedAdes3");
 
+    AdesDB database = AdesDB("./serializedADES", 0);
+
     // Serializing ADES :
     std::string ades_fn = "./serializedADES/fakeADES0.xml";
-    std::ifstream ifs(ades_fn);
-    boost::archive::xml_iarchive ia(ifs);
+    std::ifstream ifs0(ades_fn);
+    std::ifstream ifs1(ades_fn);
+    std::ifstream ifs2(ades_fn);
+    std::ifstream ifs3(ades_fn);
+    boost::archive::xml_iarchive ia0(ifs0);
+    boost::archive::xml_iarchive ia1(ifs1);
+    boost::archive::xml_iarchive ia2(ifs2);
+    boost::archive::xml_iarchive ia3(ifs3);
     std::cout << "Deserializing" << std::endl;
-    ia >> BOOST_SERIALIZATION_NVP(fakeADES0);
+    ia0 >> BOOST_SERIALIZATION_NVP(fakeADES0);
+    ia1 >> BOOST_SERIALIZATION_NVP(fakeADES1);
+    ia2 >> BOOST_SERIALIZATION_NVP(fakeADES2);
+    ia3 >> BOOST_SERIALIZATION_NVP(fakeADES3);
     std::cout << "Done" << std::endl;
-    ifs.close();
+    ifs0.close();
+    ifs1.close();
+    ifs2.close();
+    ifs3.close();
+
+    fakeADES0.setName("loadedAdes0");
+    fakeADES1.setName("loadedAdes1");
+    fakeADES2.setName("loadedAdes2");
+    fakeADES3.setName("loadedAdes3");
 
     std::cout << "Banana" << std::endl;
 
@@ -124,4 +143,13 @@ int main(int argc, char **argv)
     std::cout << displayADESInfo(fakeADES1) << std::endl;
     std::cout << displayADESInfo(fakeADES2) << std::endl;
     std::cout << displayADESInfo(fakeADES3) << std::endl;
+
+    std::vector<Ades> known_ADES;
+    known_ADES.push_back(fakeADES0);
+    known_ADES.push_back(fakeADES1);
+    known_ADES.push_back(fakeADES2);
+    known_ADES.push_back(fakeADES3);
+    database.addAdes(known_ADES);
+
+    std::cout << "Nb of ades in DB: " << database.getAdesNb() << std::endl;
 }

@@ -20,6 +20,13 @@ namespace ades {
     bool AdesDB::populate()
     {
         //load data
+        // 
+        // for each ades, 
+        //std::string ades_fn = "./serializedADES/fakeADES0.xml";
+        //std::ifstream ifs(home_);
+        //boost::archive::xml_iarchive ia(ifs);
+        //ia >> BOOST_SERIALIZATION_NVP(fakeADES0);
+        //ifs.close();
         return true;
     }
 
