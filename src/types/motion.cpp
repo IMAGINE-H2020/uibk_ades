@@ -31,21 +31,23 @@ void DMPContainer::serialize(boost::archive::xml_oarchive & oa, const unsigned i
     oa & BOOST_SERIALIZATION_NVP(temporalScale);
     oa & BOOST_SERIALIZATION_NVP(name_);
 
-    for(auto it : gaussianCenters)
-    {
-        oa & BOOST_SERIALIZATION_NVP(it);
-    }
-    for(auto it : gaussianVariances)
-    {
-        oa & BOOST_SERIALIZATION_NVP(it);
-    }
-    for(auto it : weights)
-    {
-        oa & BOOST_SERIALIZATION_NVP(it);
-    }
-    for(auto it : dmpCoeffs)
-    {
-        oa & BOOST_SERIALIZATION_NVP(it);
-    }
+    for(auto it : gaussianCenters){ oa & BOOST_SERIALIZATION_NVP(it);}
+    for(auto it : gaussianVariances){ oa & BOOST_SERIALIZATION_NVP(it); }
+    for(auto it : weights){ oa & BOOST_SERIALIZATION_NVP(it); }
+    for(auto it : dmpCoeffs){ oa & BOOST_SERIALIZATION_NVP(it); }
 }
-void DMPContainer::deserialize(boost::archive::xml_iarchive & ia, const unsigned int version){}
+void DMPContainer::serialize(boost::archive::xml_iarchive & ia, const unsigned int version)
+{
+    std::cout << "Motion serialization" << std::endl;
+
+    ia & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Motion);
+    std::cout << "Added Motion base class" << std::endl;
+
+    ia & BOOST_SERIALIZATION_NVP(temporalScale);
+    ia & BOOST_SERIALIZATION_NVP(name_);
+
+    for(auto it : gaussianCenters){ ia & BOOST_SERIALIZATION_NVP(it);}
+    for(auto it : gaussianVariances){ ia & BOOST_SERIALIZATION_NVP(it); }
+    for(auto it : weights){ ia & BOOST_SERIALIZATION_NVP(it); }
+    for(auto it : dmpCoeffs){ ia & BOOST_SERIALIZATION_NVP(it); }
+}

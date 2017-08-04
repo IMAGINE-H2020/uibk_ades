@@ -160,6 +160,6 @@ namespace ades {
 
         void serialize(boost::archive::xml_oarchive & oa, unsigned int version);
 
-        void deserialize(boost::archive::xml_iarchive & ia, unsigned int version);
+        void serialize(boost::archive::xml_iarchive & ia, unsigned int version);
     };
 }

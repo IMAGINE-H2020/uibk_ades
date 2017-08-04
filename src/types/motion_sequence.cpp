@@ -136,8 +136,20 @@ namespace ades {
         }
     }
 
-    void MotionSequence::deserialize(boost::archive::xml_iarchive & ia, const unsigned int version)
+    void MotionSequence::serialize(boost::archive::xml_iarchive & ia, const unsigned int version)
     {
         //mlpack allows serializing/deserializing models
+        ia.template register_type<DMPContainer>();
+
+        ia & BOOST_SERIALIZATION_NVP(ID);
+        ia & BOOST_SERIALIZATION_NVP(inputTypes_);
+        
+        for(auto it : motions_)
+        //for(std::vector<Motion*>::iterator it = motions_.begin() ; it != motions_.end() ; it++)
+        {
+            std::cout << "log : " << it->isTemporallyScalable() << std::endl;
+            // Commenting motion serialization until finding a solution to the segfautl
+            // ia & BOOST_SERIALIZATION_NVP(it);
+        }
     }
 }
