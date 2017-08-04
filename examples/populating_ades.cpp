@@ -64,7 +64,6 @@ std::string displayADESInfo(Ades & a)
           for(auto it = motions.begin() ; it != motions.end() ; it++)
           {
               // Let's ignore type display for now
-              //output << static_cast<std::underlying_type<DMPContainer>::type>(it) << ", " ;
               output << "\t\t" << (*it)->getName() << ", " << (*it)->getMotionType() << std::endl;
               std::map<std::string, std::vector<double>> motionparams = (*it)->getMotionParameters();
               for(auto mit=motionparams.begin() ; mit !=motionparams.end() ; mit++)
@@ -158,7 +157,7 @@ int main(int argc, char **argv)
     // Model of the gap surfance variation given input type ; provide GP dimensionality and covariance function
     firstMotionSequence.insertGPEffectModel("gap_surface_given_lever_pose", 6, "CovSum ( CovSEiso, CovNoise)");
 
-    //// then add it the same way we add precondtions or effects :
+    // then add it the same way we add precondtions or effects :
     fakeADES.insertMotionSequence("motionSequence0", firstMotionSequence);
 
     std::cout << displayADESInfo(fakeADES) << std::endl;
