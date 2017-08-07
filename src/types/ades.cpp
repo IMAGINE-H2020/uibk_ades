@@ -100,22 +100,18 @@ namespace ades {
         return &(motions_.at(motionSequenceID));
     }
 
-    void Ades::serialize(boost::archive::xml_oarchive & oa, const unsigned int version)
+    //void Ades::serialize(boost::archive::xml_oarchive & oa, const unsigned int version)
+  /*  template <class Archive> void Ades::serialize(Archive & ar, const unsigned int version)
     {
-        std::cout << "ID" << std::endl;
-        oa & BOOST_SERIALIZATION_NVP(ID);
-        std::cout << "name" << std::endl;
-        oa & BOOST_SERIALIZATION_NVP(name_);
-        std::cout << "preconds" << std::endl;
-        oa & BOOST_SERIALIZATION_NVP(preconditions_);
-        std::cout << "effects" << std::endl;
-        oa & BOOST_SERIALIZATION_NVP(effects_);
-        std::cout << "motions" << std::endl;
-        oa & BOOST_SERIALIZATION_NVP(motions_);
+        ar & BOOST_SERIALIZATION_NVP(ID);
+        ar & BOOST_SERIALIZATION_NVP(name_);
+        ar & BOOST_SERIALIZATION_NVP(preconditions_);
+        ar & BOOST_SERIALIZATION_NVP(effects_);
+        ar & BOOST_SERIALIZATION_NVP(motions_);
         std::cout << "Done serizalizing ADES" << std::endl;
     }
-
-    void Ades::serialize(boost::archive::xml_iarchive & ia, const unsigned int version)
+*/
+    /*void Ades::serialize(boost::archive::xml_iarchive & ia, const unsigned int version)
     {
         std::cout << "ID" << std::endl;
         ia & BOOST_SERIALIZATION_NVP(ID);
@@ -129,5 +125,5 @@ namespace ades {
         ia & BOOST_SERIALIZATION_NVP(motions_);
         std::cout << "Done serizalizing ADES" << std::endl;
 
-    }
+    }*/
 }

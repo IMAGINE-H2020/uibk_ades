@@ -22,6 +22,7 @@ namespace ades {
     private:
         uint64_t ID;
         std::vector<std::string> inputTypes_;
+        //std::vector<const Motion*> motions_;
         std::vector<const Motion*> motions_;
         std::map<std::string, mlpack::gmm::GMM> gmm_effectModels_;
         std::map<std::string, libgp::GaussianProcess> gp_effectModels_;
@@ -204,10 +205,29 @@ namespace ades {
         double estimateEffectVariance(const std::string effectType, std::vector<double> input);
 
 
-        void serialize(boost::archive::xml_oarchive & oa, unsigned int version);
+        template <class Archive> void serialize(Archive & ar, const unsigned int version)
+        {
+            ar.template register_type<DMPContainer>();
+
+            ar & BOOST_SERIALIZATION_NVP(ID);
+            ar & BOOST_SERIALIZATION_NVP(inputTypes_);
+            for(auto it : gmm_effectModels_)
+            {
+                ar & mlpack::data::CreateNVP(it.second, it.first);
+            }
+            //ar & BOOST_SERIALIZATION_NVP(gp_effectModels_);
+            
+            /*for(auto it : motions_)
+            {*/
+            ar & BOOST_SERIALIZATION_NVP(motions_);
+            //ar & BOOST_SERIALIZATION_NVP(it);
+            /*}*/
+        }
+
+        //void serialize(boost::archive::xml_oarchive & oa, unsigned int version);
 
 
-        void serialize(boost::archive::xml_iarchive & ia, unsigned int version);
+        //void serialize(boost::archive::xml_iarchive & ia, unsigned int version);
 
     };
 }

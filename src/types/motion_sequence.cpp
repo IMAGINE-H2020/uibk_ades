@@ -120,22 +120,32 @@ namespace ades {
         return gp_effectModels_.at(effectType).var(input_);
     }
 
-    void MotionSequence::serialize(boost::archive::xml_oarchive & oa, const unsigned int version)
+    //void MotionSequence::serialize(boost::archive::xml_oarchive & oa, const unsigned int version)
+/*
+    template <class Archive>
+    void MotionSequence::serialize(Archive & ar, const unsigned int version)
     {
-        oa.template register_type<DMPContainer>();
+        ar.template register_type<DMPContainer>();
 
-        oa & BOOST_SERIALIZATION_NVP(ID);
-        oa & BOOST_SERIALIZATION_NVP(inputTypes_);
+        ar & BOOST_SERIALIZATION_NVP(ID);
+        ar & BOOST_SERIALIZATION_NVP(inputTypes_);
+        for(auto it : gmm_effectModels_)
+        {
+            ar & mlpack::data::CreateNVP(it.second, it.first);
+        }
+        //ar & BOOST_SERIALIZATION_NVP(gp_effectModels_);
         
         for(auto it : motions_)
         //for(std::vector<Motion*>::iterator it = motions_.begin() ; it != motions_.end() ; it++)
         {
             std::cout << "log : " << it->isTemporallyScalable() << std::endl;
             // Commenting motion serialization until finding a solution to the segfautl
-            // oa & BOOST_SERIALIZATION_NVP(it);
+            ar & BOOST_SERIALIZATION_NVP(it);
         }
     }
+*/
 
+    /*
     void MotionSequence::serialize(boost::archive::xml_iarchive & ia, const unsigned int version)
     {
         //mlpack allows serializing/deserializing models
@@ -149,7 +159,7 @@ namespace ades {
         {
             std::cout << "log : " << it->isTemporallyScalable() << std::endl;
             // Commenting motion serialization until finding a solution to the segfautl
-            // ia & BOOST_SERIALIZATION_NVP(it);
+            ia & BOOST_SERIALIZATION_NVP(it);
         }
-    }
+    }*/
 }

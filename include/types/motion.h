@@ -69,7 +69,7 @@ namespace ades {
     };
 }
 
-BOOST_SERIALIZATION_ASSUME_ABSTRACT( ades::Motion );
+BOOST_SERIALIZATION_ASSUME_ABSTRACT( ades::Motion )
 
 namespace ades {
     class DMPContainer : public Motion
@@ -80,6 +80,7 @@ namespace ades {
             std::vector<double> weights;
             std::vector<double> dmpCoeffs;
             // dmp coeffs ordered as tau, alpha_z, beta_z, alpha_g, see dmp definition:
+            int count_; // temp variable for testing
 
         public:
             DMPContainer(std::vector<double> gC = std::vector<double>(),
@@ -112,12 +113,25 @@ namespace ades {
 
             MotionType getMotionType() const;
 
-            void serialize(boost::archive::xml_oarchive & oa, const unsigned int version);
+            template <class Archive> void serialize(Archive & ar, const unsigned int version)
+            {
+                ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Motion);
 
-            void serialize(boost::archive::xml_iarchive & ia, const unsigned int version);
+                ar & BOOST_SERIALIZATION_NVP(temporalScale);
+                ar & BOOST_SERIALIZATION_NVP(name_);
+
+                ar & BOOST_SERIALIZATION_NVP(gaussianCenters);
+                ar & BOOST_SERIALIZATION_NVP(gaussianVariances);
+                ar & BOOST_SERIALIZATION_NVP(weights);
+                ar & BOOST_SERIALIZATION_NVP(dmpCoeffs);
+             }
+            
+            //void serialize(boost::archive::xml_oarchive & oa, const unsigned int version);
+            //void serialize(boost::archive::xml_iarchive & ia, const unsigned int version);
     };
 
 
 }
     
 //BOOST_CLASS_EXPORT( ades::DMPContainer);
+//BOOST_CLASS_EXPORT_GUID(ades::DMPContainer, "DMPContainer")
