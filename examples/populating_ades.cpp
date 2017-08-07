@@ -6,9 +6,10 @@
 #include <iostream>
 #include <type_traits>
 
-#include "../include/types/ades.h"
-#include "../include/types/motion_sequence.h"
-#include "../include/types/motion_type.h"
+#include "../include/libades.h"
+//#include "../include/types/ades.h"
+//#include "../include/types/motion_sequence.h"
+//#include "../include/types/motion_type.h"
 
 using namespace ades;
 

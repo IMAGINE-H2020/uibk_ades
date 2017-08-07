@@ -103,7 +103,6 @@ int main(int argc, char **argv)
 {
     srand(time(NULL));
     Ades fakeADES = Ades("fakeADES0");
-    std::cout << displayADESInfo(fakeADES) << std::endl;
     
     std::map<std::string, std::string> fakePreConds;
     fakePreConds.insert(std::pair<std::string, std::string>("leverable(X)","(gap(X), reachable(X))"));
@@ -147,13 +146,12 @@ int main(int argc, char **argv)
     fakeADES.insertEffects(fakeEffects);
     fakeADES.insertMotionSequence("motionSequence0", firstMotionSequence);
 
-    //std::cout << displayADESInfo(fakeADES) << std::endl;
+    std::cout << displayADESInfo(fakeADES) << std::endl;
 
     // Serializing ADES :
     std::string ades_fn = "./serializedADES/"+fakeADES.getName()+".xml";
     std::ofstream ofs(ades_fn);
     boost::archive::xml_oarchive oa(ofs);
-    std::cout << "DSerializing" << std::endl;
     oa << BOOST_SERIALIZATION_NVP(fakeADES);
     std::cout << "Done" << std::endl;
     ofs.close();
