@@ -21,7 +21,6 @@ namespace ades {
     private:
         uint64_t ID;
         std::vector<std::string> inputTypes_;
-        //std::vector<const Motion*> motions_;
         std::vector<const Motion*> motions_;
         std::map<std::string, mlpack::gmm::GMM> gmm_effectModels_;
         std::map<std::string, libgp::GaussianProcess> gp_effectModels_;
@@ -216,7 +215,7 @@ namespace ades {
             }
             for(auto it : gp_effectModels_)
             {
-                ar & BOOST_SERIALIZATION_NVP(it);
+                //ar & BOOST_SERIALIZATION_NVP(it);
                 //ar & mlpack::data::CreateNVP(it.second, it.first);
             }
             //ar & BOOST_SERIALIZATION_NVP(gp_effectModels_);
