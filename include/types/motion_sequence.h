@@ -12,7 +12,6 @@
 
 #include "motion.h"
 #include "../utils/serializable.h"
-#include <boost/serialization/list.hpp>
 
 
 namespace ades {
@@ -215,13 +214,14 @@ namespace ades {
             {
                 ar & mlpack::data::CreateNVP(it.second, it.first);
             }
+            for(auto it : gp_effectModels_)
+            {
+                ar & BOOST_SERIALIZATION_NVP(it);
+                //ar & mlpack::data::CreateNVP(it.second, it.first);
+            }
             //ar & BOOST_SERIALIZATION_NVP(gp_effectModels_);
             
-            /*for(auto it : motions_)
-            {*/
             ar & BOOST_SERIALIZATION_NVP(motions_);
-            //ar & BOOST_SERIALIZATION_NVP(it);
-            /*}*/
         }
 
         //void serialize(boost::archive::xml_oarchive & oa, unsigned int version);

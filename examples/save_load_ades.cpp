@@ -137,7 +137,7 @@ int main(int argc, char **argv)
     firstMotionSequence.insertInputTypes(fakeInputTypes);
     firstMotionSequence.insertMotion(0, &fakeDMP);
     firstMotionSequence.insertMotion(1, &fakeDMP2);
-    firstMotionSequence.insertMotion(2, &fakeDMP);
+    //firstMotionSequence.insertMotion(2, &fakeDMP);
 
     firstMotionSequence.insertGMMEffectModel("gap_surface", 3, 1);
     firstMotionSequence.insertGPEffectModel("gap_surface_given_lever_pose", 6, "CovSum ( CovSEiso, CovNoise)");
@@ -155,4 +155,22 @@ int main(int argc, char **argv)
     oa << BOOST_SERIALIZATION_NVP(fakeADES);
     std::cout << "Done" << std::endl;
     ofs.close();
+
+    Ades newADES = Ades("loadedADES");
+
+    // Serializing ADES :
+    std::ifstream ifs0(ades_fn);
+    boost::archive::xml_iarchive ia0(ifs0);
+    try
+    {
+        std::cout << "Deserializing" << std::endl;
+        ia0 >> BOOST_SERIALIZATION_NVP(newADES);
+    }
+    catch( const std::exception & e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+    ifs0.close();
+    newADES.setName("loadedAdes");
+    std::cout << displayADESInfo(newADES) << std::endl;
 }

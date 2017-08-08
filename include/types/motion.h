@@ -6,8 +6,6 @@
 
 #include "motion_type.h"
 #include "../utils/serializable.h"
-#include <boost/serialization/list.hpp>
-#include <boost/serialization/export.hpp>
 
 namespace ades {
 
@@ -64,6 +62,11 @@ namespace ades {
         //TODO Does predicting a duration make sense?
         //TODO Talk to KIT
 
+        template <class Archive> void serialize(Archive & ar, const unsigned int version)
+        {
+            ar & BOOST_SERIALIZATION_NVP(temporalScale);
+            ar & BOOST_SERIALIZATION_NVP(name_);
+        }
         //void serialize(boost::archive::xml_oarchive & oa, const unsigned int version){ std::cout << "Virtual bananas" << std::endl; }
         //void deserialize(boost::archive::xml_iarchive & ia, const unsigned int version){}
     };
@@ -116,9 +119,6 @@ namespace ades {
             template <class Archive> void serialize(Archive & ar, const unsigned int version)
             {
                 ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Motion);
-
-                ar & BOOST_SERIALIZATION_NVP(temporalScale);
-                ar & BOOST_SERIALIZATION_NVP(name_);
 
                 ar & BOOST_SERIALIZATION_NVP(gaussianCenters);
                 ar & BOOST_SERIALIZATION_NVP(gaussianVariances);
