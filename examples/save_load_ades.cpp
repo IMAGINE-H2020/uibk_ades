@@ -101,76 +101,16 @@ std::string displayADESInfo(Ades & a)
 
 int main(int argc, char **argv)
 {
-    srand(time(NULL));
-    Ades fakeADES = Ades("fakeADES0");
-    
-    std::map<std::string, std::string> fakePreConds;
-    fakePreConds.insert(std::pair<std::string, std::string>("leverable(X)","(gap(X), reachable(X))"));
-    std::map<std::string, std::string> fakeEffects;
-    fakeEffects.insert(std::pair<std::string, std::string>("levered(X)","(!gap(X))"));
-    
-    MotionSequence firstMotionSequence;
-    // Input dimensions to consider :
-    std::string inputDimensions[] = {"target_position", "max_tool_force"};
-    std::vector<std::string> fakeInputTypes(inputDimensions, inputDimensions+sizeof(inputDimensions)/sizeof(inputDimensions[0]));
-    // List of motions :
-    std::vector<double> gaussianCenters;
-    std::vector<double> gaussianVariances;
-    std::vector<double> weights;
-    for(int i = 0 ; i < 10 ; i++)
-    {
-        gaussianCenters.push_back((double)i);
-        gaussianVariances.push_back(1.0+(rand()%100)/100.0);
-        weights.push_back((rand() % 100) / 100.0);
-    }
-    // tau, alpha_z, beta_z, alpha_g
-    const double arr[] = {1.0, 1.5, 0.5, 0.1};
-    std::vector<double> dmp_params(arr, arr + sizeof(arr) / sizeof(arr[0]) );
-
-    DMPContainer fakeDMP(gaussianCenters, gaussianVariances, weights, dmp_params);
-   
-    // Copy constructor 
-    DMPContainer fakeDMP2(fakeDMP);
-    fakeDMP.setName("fakeDMP1");
-    fakeDMP2.setName("fakeDMP2");
-    // Chaining twice the same gesture
-    firstMotionSequence.insertInputTypes(fakeInputTypes);
-    firstMotionSequence.insertMotion(0, &fakeDMP);
-    firstMotionSequence.insertMotion(1, &fakeDMP2);
-    //firstMotionSequence.insertMotion(2, &fakeDMP);
-
-    firstMotionSequence.insertGMMEffectModel("gap_surface", 3, 1);
-    firstMotionSequence.insertGPEffectModel("gap_surface_given_lever_pose", 6, "CovSum ( CovSEiso, CovNoise)");
-
-    fakeADES.insertPreconditions(fakePreConds);
-    fakeADES.insertEffects(fakeEffects);
-    fakeADES.insertMotionSequence("motionSequence0", firstMotionSequence);
-
-    std::cout << displayADESInfo(fakeADES) << std::endl;
-
-    // Serializing ADES :
-    std::string ades_fn = "./serializedADES/"+fakeADES.getName()+".xml";
-    std::ofstream ofs(ades_fn);
-    boost::archive::xml_oarchive oa(ofs);
-    oa << BOOST_SERIALIZATION_NVP(fakeADES);
-    std::cout << "Done" << std::endl;
-    ofs.close();
+    std::string ades_fn = "./serializedADES/fakeLeverAction.xml";
 
     Ades newADES = Ades("loadedADES");
 
-    // Serializing ADES :
-    std::ifstream ifs0(ades_fn);
-    boost::archive::xml_iarchive ia0(ifs0);
-    try
+    // Deserializing ADES :
     {
-        std::cout << "Deserializing" << std::endl;
+        std::ifstream ifs0(ades_fn);
+        boost::archive::xml_iarchive ia0(ifs0);
         ia0 >> BOOST_SERIALIZATION_NVP(newADES);
     }
-    catch( const std::exception & e)
-    {
-        std::cout << e.what() << std::endl;
-    }
-    ifs0.close();
     newADES.setName("loadedAdes");
     std::cout << displayADESInfo(newADES) << std::endl;
 }

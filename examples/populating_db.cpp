@@ -6,14 +6,14 @@
 #include <iostream>
 #include <type_traits>
 
-#include "../include/libades.h"
-/*
+//#include "../include/libades.h"
+
 #include "../include/storage/adesdb.h"
 #include "../include/types/ades.h"
 #include "../include/types/motion_sequence.h"
 #include "../include/types/motion_type.h"
 #include "../include/utils/serializable.h"
-*/
+
 using namespace ades;
 
 std::string const basic_color = "\033[97m";
@@ -105,50 +105,85 @@ int main(int argc, char **argv)
 {
     srand(time(NULL));
     Ades fakeADES0 = Ades("loadedAdes0");
-    Ades fakeADES1 = Ades("loadedAdes1");
-    Ades fakeADES2 = Ades("loadedAdes2");
-    Ades fakeADES3 = Ades("loadedAdes3");
+//    Ades fakeADES1 = Ades("loadedAdes1");
+//    Ades fakeADES2 = Ades("loadedAdes2");
+//    Ades fakeADES3 = Ades("loadedAdes3");
 
     AdesDB database = AdesDB("./databaseADES", 0);
 
     // Serializing ADES :
     std::string ades_fn = "./serializedADES/fakeADES0.xml";
     std::ifstream ifs0(ades_fn);
-    std::ifstream ifs1(ades_fn);
-    std::ifstream ifs2(ades_fn);
-    std::ifstream ifs3(ades_fn);
-    boost::archive::xml_iarchive ia0(ifs0);
-    boost::archive::xml_iarchive ia1(ifs1);
-    boost::archive::xml_iarchive ia2(ifs2);
-    boost::archive::xml_iarchive ia3(ifs3);
-    std::cout << "Deserializing" << std::endl;
-    ia0 >> BOOST_SERIALIZATION_NVP(fakeADES0);
-    ia1 >> BOOST_SERIALIZATION_NVP(fakeADES1);
-    ia2 >> BOOST_SERIALIZATION_NVP(fakeADES2);
-    ia3 >> BOOST_SERIALIZATION_NVP(fakeADES3);
-    std::cout << "Done" << std::endl;
+//    std::ifstream ifs1(ades_fn);
+//    std::ifstream ifs2(ades_fn);
+//    std::ifstream ifs3(ades_fn);
+//    boost::archive::xml_iarchive ia1(ifs1);
+//    boost::archive::xml_iarchive ia2(ifs2);
+//    boost::archive::xml_iarchive ia3(ifs3);
+
+//    try
+//    {
+        {
+        boost::archive::xml_iarchive ia0(ifs0);
+        std::cout << "Deserializing" << std::endl;
+        ia0 >> BOOST_SERIALIZATION_NVP(fakeADES0);
+        }
+//    }
+ //   catch( const std::exception & e)
+  //  {
+   //     std::cout << e.what() << std::endl;
+    //}
+  /*  try
+    {
+        std::cout << "Deserializing 1" << std::endl;
+        ia1 >> BOOST_SERIALIZATION_NVP(fakeADES1);
+    }
+    catch( const std::exception & e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+    try
+    {
+        std::cout << "Deserializing 2" << std::endl;
+        ia2 >> BOOST_SERIALIZATION_NVP(fakeADES2);
+    }
+    catch( const std::exception & e)
+    {
+        std::cout << e.what() << std::endl;
+    }
+    try
+    {
+        std::cout << "Deserializing 3" << std::endl;
+        ia3 >> BOOST_SERIALIZATION_NVP(fakeADES3);
+    }
+    catch( const std::exception & e)
+    {
+        std::cout << "Banana happened !" << std::endl;
+        std::cout << e.what() << std::endl;
+    }*/
     ifs0.close();
-    ifs1.close();
+/*    ifs1.close();
     ifs2.close();
     ifs3.close();
-
+*/
     fakeADES0.setName("loadedAdes0");
-    fakeADES1.setName("loadedAdes1");
+  /*  fakeADES1.setName("loadedAdes1");
     fakeADES2.setName("loadedAdes2");
     fakeADES3.setName("loadedAdes3");
-
+*/
     std::cout << "Banana" << std::endl;
 
-    std::cout << displayADESInfo(fakeADES0) << std::endl;
-    std::cout << displayADESInfo(fakeADES1) << std::endl;
-    std::cout << displayADESInfo(fakeADES2) << std::endl;
-    std::cout << displayADESInfo(fakeADES3) << std::endl;
+//    std::cout << displayADESInfo(fakeADES0) << std::endl;
+//    std::cout << displayADESInfo(fakeADES1) << std::endl;
+//    std::cout << displayADESInfo(fakeADES2) << std::endl;
+//    std::cout << displayADESInfo(fakeADES3) << std::endl;
 
     std::vector<Ades> known_ADES;
     known_ADES.push_back(fakeADES0);
-    known_ADES.push_back(fakeADES1);
+  /*  known_ADES.push_back(fakeADES1);
     known_ADES.push_back(fakeADES2);
     known_ADES.push_back(fakeADES3);
+   */
     database.addAdes(known_ADES);
 
     std::cout << "Nb of ades in DB: " << database.getAdesNb() << std::endl;

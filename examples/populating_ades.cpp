@@ -165,9 +165,10 @@ int main(int argc, char **argv)
 
     // Serializing ADES :
     std::string ades_fn = "./serializedADES/"+fakeADES.getName()+".xml";
-    std::ofstream ofs(ades_fn);
-    boost::archive::xml_oarchive oa(ofs);
-    oa << BOOST_SERIALIZATION_NVP(fakeADES);
+    {
+        std::ofstream ofs(ades_fn);
+        boost::archive::xml_oarchive oa(ofs);
+        oa << BOOST_SERIALIZATION_NVP(fakeADES);
+    }
     std::cout << "Done : " << fakeADES.getName() << " serialized to " << ades_fn << std::endl;
-    ofs.close();
 }
