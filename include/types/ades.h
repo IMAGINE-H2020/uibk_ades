@@ -23,7 +23,7 @@ namespace ades {
 
         //TODO Explicit scene targets/affordances necessary or do preconditions suffice?
 
-        std::map<std::string, MotionSequence> motions_;
+        std::map<std::string, MotionSequence> motion_sequences_;
 
 
     public:
@@ -155,7 +155,7 @@ namespace ades {
          */
         std::map<std::string, MotionSequence> getMotionSequences() const
         {
-            return motions_;
+            return motion_sequences_;
         }
 
         template <class Archive> void serialize(Archive & ar, const unsigned int version)
@@ -164,7 +164,7 @@ namespace ades {
             ar & BOOST_SERIALIZATION_NVP(name_);
             ar & BOOST_SERIALIZATION_NVP(preconditions_);
             ar & BOOST_SERIALIZATION_NVP(effects_);
-            ar & BOOST_SERIALIZATION_NVP(motions_);
+            ar & BOOST_SERIALIZATION_NVP(motion_sequences_);
         }
     };
 }

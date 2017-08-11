@@ -13,7 +13,7 @@ namespace ades {
             name_(name),
             preconditions_(preconditions),
             effects_(effects),
-            motions_(motions)
+            motion_sequences_(motions)
     {}
 
     Ades::~Ades()
@@ -87,16 +87,16 @@ namespace ades {
     void Ades::insertMotionSequence(const std::string motionSequenceID,
                                     const MotionSequence motionSequence)
     {
-        motions_.insert(pair<string, MotionSequence>(motionSequenceID, motionSequence));
+        motion_sequences_.insert(pair<string, MotionSequence>(motionSequenceID, motionSequence));
     }
 
     void Ades::removeMotionSequence(const std::string motionSequenceID)
     {
-        motions_.erase(motionSequenceID);
+        motion_sequences_.erase(motionSequenceID);
     }
 
     MotionSequence *Ades::modifyMotionSequence(const std::string motionSequenceID)
     {
-        return &(motions_.at(motionSequenceID));
+        return &(motion_sequences_.at(motionSequenceID));
     }
 }

@@ -12,6 +12,7 @@
 
 #include "motion.h"
 #include "../utils/serializable.h"
+#include "../motions/dmp.h"
 
 
 namespace ades {

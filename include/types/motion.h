@@ -23,9 +23,9 @@ namespace ades {
 
     public:
 
-        Motion(std::string name="", float scaling=1.0) : name_(name), temporalScale(scaling){}
+        //Motion(std::string name="", float scaling=1.0) : name_(name), temporalScale(scaling){}
 
-        ~Motion(){}
+        virtual ~Motion(){}
 
         std::string getName() const
         {
@@ -71,62 +71,3 @@ namespace ades {
 }
 
 BOOST_SERIALIZATION_ASSUME_ABSTRACT( ades::Motion )
-
-namespace ades {
-    class DMPContainer : public Motion
-    {
-        private:
-            std::vector<double> gaussianCenters;
-            std::vector<double> gaussianVariances;
-            std::vector<double> weights;
-            std::vector<double> dmpCoeffs;
-            // dmp coeffs ordered as tau, alpha_z, beta_z, alpha_g, see dmp definition:
-            int count_; // temp variable for testing
-
-        public:
-            DMPContainer(std::vector<double> gC = std::vector<double>(),
-                         std::vector<double> gV = std::vector<double>(),
-                         std::vector<double> w = std::vector<double>(),
-                         std::vector<double> coeffs = std::vector<double>()
-                      )
-            {
-                gaussianCenters = gC;
-                gaussianVariances = gV;
-                weights = w;
-                dmpCoeffs = coeffs;
-            }
-
-            DMPContainer(const DMPContainer & d) :
-                gaussianCenters(d.gaussianCenters),
-                gaussianVariances(d.gaussianVariances),
-                weights(d.weights),
-                dmpCoeffs(d.dmpCoeffs)
-           {}
-
-            ~DMPContainer(){}
-
-            std::map<std::string, std::vector<double>> getMotionParameters() const;
-            bool isTemporallyScalable() const;
-
-            float getTemporalScale(){ return temporalScale; }
-
-            void setTemporalScale(float scaling = 1.0);
-
-            MotionType getMotionType() const;
-
-            template <class Archive> void serialize(Archive & ar, const unsigned int version)
-            {
-                ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Motion);
-
-                ar & BOOST_SERIALIZATION_NVP(gaussianCenters);
-                ar & BOOST_SERIALIZATION_NVP(gaussianVariances);
-                ar & BOOST_SERIALIZATION_NVP(weights);
-                ar & BOOST_SERIALIZATION_NVP(dmpCoeffs);
-             }
-    };
-
-
-}
-
-//BOOST_CLASS_EXPORT( ades::DMPContainer);
-//BOOST_CLASS_EXPORT_GUID(ades::DMPContainer, "DMPContainer")
