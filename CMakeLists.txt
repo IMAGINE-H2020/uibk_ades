@@ -6,7 +6,7 @@ set(CMAKE_CXX_COMPILER clang++)
 set(CMAKE_BUILD_TYPE Release)
 set(LIBRARY_NAME imagine-ades)
 
-find_package(Boost REQUIRED COMPONENTS system serialization)
+find_package(Boost REQUIRED COMPONENTS system serialization filesystem)
 find_package(Armadillo)
 
 

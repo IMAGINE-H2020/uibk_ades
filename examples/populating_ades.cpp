@@ -7,6 +7,7 @@
 #include <type_traits>
 
 #include "../include/libades.h"
+#include <boost/filesystem.hpp>
 //#include "../include/types/ades.h"
 //#include "../include/types/motion_sequence.h"
 //#include "../include/types/motion_type.h"
@@ -164,7 +165,15 @@ int main(int argc, char **argv)
     std::cout << displayADESInfo(fakeADES) << std::endl;
 
     // Serializing ADES :
-    std::string ades_fn = "./serializedADES/"+fakeADES.getName()+".xml";
+    // THIS IS NOT THE INTENDED USAGE OF THE SERIALIZATION - IT SHALL ONLY BE CALLED FROM INSIDE THE DB BUT NEVER
+    // BY THE USER ON A SPECIFIC ADES; ONE COULD SAY THIS VIOLATES ACID TO SOME DEGREE
+    // for now it's fine but I'd like to have such a usage removed in future
+    std::string dir = "./serializedADES/";
+    std::string ades_fn = dir+fakeADES.getName()+".xml";
+
+    boost::filesystem::path path(dir.c_str()); // code in main function
+    boost::filesystem::create_directories(path);
+
     {
         std::ofstream ofs(ades_fn);
         boost::archive::xml_oarchive oa(ofs);
