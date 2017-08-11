@@ -61,7 +61,7 @@ namespace ades {
         mlpack::gmm::GMM newDist(gaussiansNb, gaussiansDim+1);
         gmm_effectModels_.insert(pair<string, mlpack::gmm::GMM>(effectType, newDist));
     }
-    
+
     void MotionSequence::insertGMMEffectModel(const string effectType, mlpack::gmm::GMM dist)
     {
         gmm_effectModels_.insert(pair<string, mlpack::gmm::GMM>(effectType, dist));
@@ -119,47 +119,4 @@ namespace ades {
         double const* input_ = &input[0];
         return gp_effectModels_.at(effectType).var(input_);
     }
-
-    //void MotionSequence::serialize(boost::archive::xml_oarchive & oa, const unsigned int version)
-/*
-    template <class Archive>
-    void MotionSequence::serialize(Archive & ar, const unsigned int version)
-    {
-        ar.template register_type<DMPContainer>();
-
-        ar & BOOST_SERIALIZATION_NVP(ID);
-        ar & BOOST_SERIALIZATION_NVP(inputTypes_);
-        for(auto it : gmm_effectModels_)
-        {
-            ar & mlpack::data::CreateNVP(it.second, it.first);
-        }
-        //ar & BOOST_SERIALIZATION_NVP(gp_effectModels_);
-        
-        for(auto it : motions_)
-        //for(std::vector<Motion*>::iterator it = motions_.begin() ; it != motions_.end() ; it++)
-        {
-            std::cout << "log : " << it->isTemporallyScalable() << std::endl;
-            // Commenting motion serialization until finding a solution to the segfautl
-            ar & BOOST_SERIALIZATION_NVP(it);
-        }
-    }
-*/
-
-    /*
-    void MotionSequence::serialize(boost::archive::xml_iarchive & ia, const unsigned int version)
-    {
-        //mlpack allows serializing/deserializing models
-        ia.template register_type<DMPContainer>();
-
-        ia & BOOST_SERIALIZATION_NVP(ID);
-        ia & BOOST_SERIALIZATION_NVP(inputTypes_);
-        
-        for(auto it : motions_)
-        //for(std::vector<Motion*>::iterator it = motions_.begin() ; it != motions_.end() ; it++)
-        {
-            std::cout << "log : " << it->isTemporallyScalable() << std::endl;
-            // Commenting motion serialization until finding a solution to the segfautl
-            ia & BOOST_SERIALIZATION_NVP(it);
-        }
-    }*/
 }

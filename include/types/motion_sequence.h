@@ -141,7 +141,7 @@ namespace ades {
 
          /*! Add an effect model from GP parameters to this  motion sequence for the specified effect.
          *  \param effectType : an effect of <string> for which to add a model
-         *  \param dist : the effect 
+         *  \param dist : the effect
          */
         void insertGPEffectModel(const std::string effectType, int gpDim, std::string covf);
 
@@ -219,14 +219,9 @@ namespace ades {
                 //ar & mlpack::data::CreateNVP(it.second, it.first);
             }
             //ar & BOOST_SERIALIZATION_NVP(gp_effectModels_);
-            
+
             ar & BOOST_SERIALIZATION_NVP(motions_);
         }
-
-        //void serialize(boost::archive::xml_oarchive & oa, unsigned int version);
-
-
-        //void serialize(boost::archive::xml_iarchive & ia, unsigned int version);
 
     };
 }

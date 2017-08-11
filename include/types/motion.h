@@ -13,11 +13,11 @@ namespace ades {
      */
     class Motion : public Serializable
     {
-    
+
     protected:
         float temporalScale;
-        /*! user-defined name 
-        * */    
+        /*! user-defined name
+        * */
         std::string name_;
 
 
@@ -26,7 +26,7 @@ namespace ades {
         Motion(std::string name="", float scaling=1.0) : name_(name), temporalScale(scaling){}
 
         ~Motion(){}
-        
+
         std::string getName() const
         {
             return name_;
@@ -92,7 +92,7 @@ namespace ades {
                          std::vector<double> coeffs = std::vector<double>()
                       )
             {
-                gaussianCenters = gC; 
+                gaussianCenters = gC;
                 gaussianVariances = gV;
                 weights = w;
                 dmpCoeffs = coeffs;
@@ -106,10 +106,10 @@ namespace ades {
            {}
 
             ~DMPContainer(){}
-            
+
             std::map<std::string, std::vector<double>> getMotionParameters() const;
             bool isTemporallyScalable() const;
-            
+
             float getTemporalScale(){ return temporalScale; }
 
             void setTemporalScale(float scaling = 1.0);
@@ -125,13 +125,10 @@ namespace ades {
                 ar & BOOST_SERIALIZATION_NVP(weights);
                 ar & BOOST_SERIALIZATION_NVP(dmpCoeffs);
              }
-            
-            //void serialize(boost::archive::xml_oarchive & oa, const unsigned int version);
-            //void serialize(boost::archive::xml_iarchive & ia, const unsigned int version);
     };
 
 
 }
-    
+
 //BOOST_CLASS_EXPORT( ades::DMPContainer);
 //BOOST_CLASS_EXPORT_GUID(ades::DMPContainer, "DMPContainer")
