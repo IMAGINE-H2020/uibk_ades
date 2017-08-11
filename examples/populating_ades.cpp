@@ -112,9 +112,11 @@ int main(int argc, char **argv)
     fakeADES.insertPreconditions(fakePreConds);
     std::cout << displayADESInfo(fakeADES) << std::endl;
     
+    /*
     fakeADES.removePreconditions();
     std::cout << displayADESInfo(fakeADES) << std::endl;
-    
+    */
+
     // Let's insert a set of planner/categorical effects
     std::map<std::string, std::string> fakeEffects;
     fakeEffects.insert(std::pair<std::string, std::string>("levered(X)","\\+ gap(X)"));
