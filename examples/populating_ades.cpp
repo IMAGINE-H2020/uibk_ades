@@ -83,15 +83,15 @@ std::string displayADESInfo(Ades & a)
 
           for(auto emit = effectprob.begin() ; emit != effectprob.end() ; emit++)
           {
-              output << "\t\t\t" << emit->first << ", dim: " << emit->second.Dimensionality() <<  ", nb gauss: " << emit->second.Gaussians() << std::endl; 
+              output << "\t\t\t" << emit->first << ", dim: " << emit->second.Dimensionality() <<  ", nb gauss: " << emit->second.Gaussians() << std::endl;
           }
-          
+
           output << "\t" << "Effect value models : " << std::endl;
           auto effectmean = (ams_it->second ).getGPEffectModels();
 
           for(auto emit = effectmean.begin() ; emit != effectmean.end() ; emit++)
           {
-              output << "\t\t\t" << emit->first << ", dim: " << emit->second.get_input_dim() <<  ", nb samples in dataset: " << emit->second.get_sampleset_size() << std::endl; 
+              output << "\t\t\t" << emit->first << ", dim: " << emit->second.get_input_dim() <<  ", nb samples in dataset: " << emit->second.get_sampleset_size() << std::endl;
           }
     }
     output << default_color << "----------------------";
@@ -104,31 +104,29 @@ int main(int argc, char **argv)
     std::cout << displayADESInfo(fakeADES) << std::endl;
     fakeADES.setName("fakeLeverAction");
     std::cout << displayADESInfo(fakeADES) << std::endl;
-    
+
     // Let's insert a set of planner/categorical preconditions
     // here, the assumption is that preconditions are prolog-like statements, the :- is not explicit but embedded in the key-value separation
     std::map<std::string, std::string> fakePreConds;
     fakePreConds.insert(std::pair<std::string, std::string>("leverable(X)","gap(X), reachable(X)"));
     fakeADES.insertPreconditions(fakePreConds);
     std::cout << displayADESInfo(fakeADES) << std::endl;
-    
-    /*
-    fakeADES.removePreconditions();
-    std::cout << displayADESInfo(fakeADES) << std::endl;
-    */
 
     // Let's insert a set of planner/categorical effects
     std::map<std::string, std::string> fakeEffects;
     fakeEffects.insert(std::pair<std::string, std::string>("levered(X)","\\+ gap(X)"));
     fakeADES.insertEffects(fakeEffects);
     std::cout << displayADESInfo(fakeADES) << std::endl;
-    
+
     // Let's insert a motion sequence describing how to execute the action
     // 1st let's populate a simple motion_sequence
     MotionSequence firstMotionSequence;
+
     // Input dimensions to consider :
     std::string inputDimensions[] = {"target_position", "max_tool_force"};
     std::vector<std::string> fakeInputTypes(inputDimensions, inputDimensions+sizeof(inputDimensions)/sizeof(inputDimensions[0]));
+
+
     // List of motions :
     std::vector<double> gaussianCenters;
     std::vector<double> gaussianVariances;
@@ -146,18 +144,22 @@ int main(int argc, char **argv)
     DMPContainer fakeDMP(gaussianCenters, gaussianVariances, weights, dmp_params);
     std::cout << "Is this motion temporally scalable ? " << fakeDMP.isTemporallyScalable() << std::endl;
     std::cout << "What is this motion temporal scale ? " << fakeDMP.getTemporalScale() << std::endl;
-    
+
     DMPContainer fakeDMP2(fakeDMP);
     fakeDMP.setName("fakeDMP1");
     fakeDMP2.setName("fakeDMP2");
+
     // Chaining twice the same gesture
     firstMotionSequence.insertInputTypes(fakeInputTypes);
+
+
     firstMotionSequence.insertMotion(0, &fakeDMP);
     firstMotionSequence.insertMotion(1, &fakeDMP2);
-    //firstMotionSequence.insertMotion(2, &fakeDMP);
+    firstMotionSequence.insertMotion(2, &fakeDMP);
+
 
     // Model of the probability of gap surfance variation:
-    firstMotionSequence.insertGMMEffectModel("gap_surface", 3, 1);
+    //firstMotionSequence.insertGMMEffectModel("gap_surface", 3, 1);
     // Model of the gap surfance variation given input type ; provide GP dimensionality and covariance function
     firstMotionSequence.insertGPEffectModel("gap_surface_given_lever_pose", 6, "CovSum ( CovSEiso, CovNoise)");
 

@@ -210,16 +210,18 @@ namespace ades {
 
             ar & BOOST_SERIALIZATION_NVP(ID);
             ar & BOOST_SERIALIZATION_NVP(inputTypes_);
+
             for(auto it : gmm_effectModels_)
             {
                 ar & mlpack::data::CreateNVP(it.second, it.first);
             }
+
+            /**
             for(auto it : gp_effectModels_)
             {
                 //ar & BOOST_SERIALIZATION_NVP(it);
                 //ar & mlpack::data::CreateNVP(it.second, it.first);
-            }
-            //ar & BOOST_SERIALIZATION_NVP(gp_effectModels_);
+            }**/
 
             ar & BOOST_SERIALIZATION_NVP(motions_);
         }
