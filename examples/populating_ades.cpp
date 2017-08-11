@@ -154,7 +154,7 @@ int main(int argc, char **argv)
     firstMotionSequence.insertInputTypes(fakeInputTypes);
     firstMotionSequence.insertMotion(0, &fakeDMP);
     firstMotionSequence.insertMotion(1, &fakeDMP2);
-    firstMotionSequence.insertMotion(2, &fakeDMP);
+    //firstMotionSequence.insertMotion(2, &fakeDMP);
 
     // Model of the probability of gap surfance variation:
     firstMotionSequence.insertGMMEffectModel("gap_surface", 3, 1);
