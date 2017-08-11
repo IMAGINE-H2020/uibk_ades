@@ -67,8 +67,6 @@ namespace ades {
             ar & BOOST_SERIALIZATION_NVP(temporalScale);
             ar & BOOST_SERIALIZATION_NVP(name_);
         }
-        //void serialize(boost::archive::xml_oarchive & oa, const unsigned int version){ std::cout << "Virtual bananas" << std::endl; }
-        //void deserialize(boost::archive::xml_iarchive & ia, const unsigned int version){}
     };
 }
 
