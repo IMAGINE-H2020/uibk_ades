@@ -69,5 +69,3 @@ namespace ades {
         }
     };
 }
-
-BOOST_SERIALIZATION_ASSUME_ABSTRACT( ades::Motion )

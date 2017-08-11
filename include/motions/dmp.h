@@ -83,11 +83,4 @@ namespace ades {
              }
     };
 
-
 }
-
-//BOOST_CLASS_EXPORT( ades::DMPContainer);
-//BOOST_CLASS_EXPORT_GUID(ades::DMPContainer, "DMPContainer")
-
-
-
