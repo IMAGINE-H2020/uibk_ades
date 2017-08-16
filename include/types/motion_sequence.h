@@ -3,12 +3,14 @@
 
 #include <vector>
 #include <map>
+
 #include <mlpack/core.hpp>
 #include <mlpack/methods/gmm/gmm.hpp>
 #include <armadillo>
 #include <gp/gp.h>
 #include <gp/gp_utils.h>
 
+#include <shogun/clustering/GMM.h>
 
 #include "motion.h"
 #include "../utils/serializable.h"

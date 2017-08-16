@@ -3,12 +3,14 @@ project(libades)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_COMPILER clang++)
-set(CMAKE_BUILD_TYPE Release)
+set(CMAKE_BUILD_TYPE Debug)
 set(LIBRARY_NAME imagine-ades)
 
 find_package(Boost REQUIRED COMPONENTS system serialization filesystem)
 find_package(Armadillo)
-
+#set(CMAKE_PREFIX_PATH /usr/lib/cmake)
+#message(STATUS "CMAKE MODULE PATH : ${CMAKE_MODULE_PATH}")
+find_package(Shogun CONFIG)
 
 find_path(MLPACK_INCLUDE_DIR
   NAMES core.hpp prereqs.hpp
@@ -45,12 +47,33 @@ if(NOT LIBGP_LIBRARY)
   message(FATAL_ERROR "LIBGP_LIBRARY not found!")
 endif()
 
+#find_path(SHOGUN_INCLUDE_DIR
+#    NAMES GMM.h
+#    PATHS /usr/include/shogun/clustering/ /usr/local/include/shogun/clustering/
+#)
+#if(NOT SHOGUN_INCLUDE_DIR)
+#    message(FATAL_ERROR "SHOGUN_INCLUDE_DIR not found!")
+#endif()
+#
+#
+#find_library(SHOGUN_LIBRARY
+#  NAMES libshogun.so
+#  PATHS /usr/lib/
+#)
+#if(NOT SHOGUN_LIBRARY)
+#    message(FATAL_ERROR "SHOGUN_LIBRARY not found!")
+#endif()
+
+message(STATUS "Shogun paths :")
+message(STATUS "Shogun lib :" ${SHOGUN_LIBRARY})
+message(STATUS "Shogun include :" ${SHOGUN_INCLUDE_DIR})
 
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/include
   ${Boost_INCLUDE_DIR}
   ${ARMADILLO_INCLUDE_DIR}
   ${MLPACK_INCLUDE_DIR}
+  ${SHOGUN_INCLUDE_DIR}
   GnuInstallDirs
 )
 
@@ -88,6 +111,7 @@ target_link_libraries (
   ${MLPACK_LIBRARY}
   ${LIBGP_LIBRARY}
   ${ARMADILLO_LIBRARIES}
+  ${SHOGUN_LIBRARY}
 )
 
 export(TARGETS ${LIBRARY_NAME} FILE "${PROJECT_BINARY_DIR}/ADEStargets.cmake")
