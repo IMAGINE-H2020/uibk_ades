@@ -1,3 +1,4 @@
+#pragma once
 // main header for external inclusion
 
 #include "storage/adesdb.h"
