@@ -10,6 +10,8 @@
 #include <boost/serialization/export.hpp>
 #include <boost/serialization/split_member.hpp>
 
+extern std::string DB_DIR;
+
 class Serializable
 {
     private:

@@ -248,7 +248,7 @@ namespace ades {
             for(auto effect : effectTypes)
             {
                 auto model = gp_effectModels_.at(effect);
-                std::string path = "/tmp/" + effect + ".effect";
+                std::string path = DB_DIR + "/" + effect + ".effect";
                 model.write(path.c_str());
             }
 
@@ -299,16 +299,14 @@ namespace ades {
 
             for(auto effect : effectTypes)
             {
-                std::string path = "/tmp/" + effect + ".effect";
+                std::string path = DB_DIR + "/" + effect + ".effect";
                 auto model = libgp::GaussianProcess(path.c_str());
                 gp_effectModels_.insert(std::pair<std::string, libgp::GaussianProcess>(effect, model));
             }
-
 
             ar & BOOST_SERIALIZATION_NVP(motions_);
         }
 
         BOOST_SERIALIZATION_SPLIT_MEMBER()
-
     };
 }
