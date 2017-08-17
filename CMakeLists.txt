@@ -47,26 +47,6 @@ if(NOT LIBGP_LIBRARY)
   message(FATAL_ERROR "LIBGP_LIBRARY not found!")
 endif()
 
-#find_path(SHOGUN_INCLUDE_DIR
-#    NAMES GMM.h
-#    PATHS /usr/include/shogun/clustering/ /usr/local/include/shogun/clustering/
-#)
-#if(NOT SHOGUN_INCLUDE_DIR)
-#    message(FATAL_ERROR "SHOGUN_INCLUDE_DIR not found!")
-#endif()
-#
-#
-#find_library(SHOGUN_LIBRARY
-#  NAMES libshogun.so
-#  PATHS /usr/lib/
-#)
-#if(NOT SHOGUN_LIBRARY)
-#    message(FATAL_ERROR "SHOGUN_LIBRARY not found!")
-#endif()
-
-message(STATUS "Shogun paths :")
-message(STATUS "Shogun lib :" ${SHOGUN_LIBRARY})
-message(STATUS "Shogun include :" ${SHOGUN_INCLUDE_DIR})
 
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -117,6 +97,15 @@ target_link_libraries (
 export(TARGETS ${LIBRARY_NAME} FILE "${PROJECT_BINARY_DIR}/ADEStargets.cmake")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 list(APPEND CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
+
+install(TARGETS ${LIBRARY_NAME} LIBRARY DESTINATION /usr/lib)
+# Following part may be done more cleverly ?
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/libades.h DESTINATION /usr/include/libades)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/motions DESTINATION /usr/include/libades)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/storage DESTINATION /usr/include/libades)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/types DESTINATION /usr/include/libades)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/utils DESTINATION /usr/include/libades)
+
 # Adding example subdirectory
 add_subdirectory(examples)
 
