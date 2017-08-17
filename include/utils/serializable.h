@@ -8,6 +8,7 @@
 #include <boost/serialization/map.hpp>
 #include <boost/serialization/vector.hpp>
 #include <boost/serialization/export.hpp>
+#include <boost/serialization/split_member.hpp>
 
 class Serializable
 {

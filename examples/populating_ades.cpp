@@ -159,7 +159,7 @@ int main(int argc, char **argv)
 
 
     // Model of the probability of gap surfance variation:
-    //firstMotionSequence.insertGMMEffectModel("gap_surface", 3, 1);
+    firstMotionSequence.insertGMMEffectModel("gap_surface", 3, 1);
     // Model of the gap surfance variation given input type ; provide GP dimensionality and covariance function
     firstMotionSequence.insertGPEffectModel("gap_surface_given_lever_pose", 6, "CovSum ( CovSEiso, CovNoise)");
 
