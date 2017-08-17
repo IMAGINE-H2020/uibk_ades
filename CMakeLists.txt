@@ -10,7 +10,6 @@ find_package(Boost REQUIRED COMPONENTS system serialization filesystem)
 find_package(Armadillo)
 #set(CMAKE_PREFIX_PATH /usr/lib/cmake)
 #message(STATUS "CMAKE MODULE PATH : ${CMAKE_MODULE_PATH}")
-find_package(Shogun CONFIG)
 
 find_path(MLPACK_INCLUDE_DIR
   NAMES core.hpp prereqs.hpp
@@ -47,13 +46,11 @@ if(NOT LIBGP_LIBRARY)
   message(FATAL_ERROR "LIBGP_LIBRARY not found!")
 endif()
 
-
 include_directories(
   ${CMAKE_CURRENT_SOURCE_DIR}/include
   ${Boost_INCLUDE_DIR}
   ${ARMADILLO_INCLUDE_DIR}
   ${MLPACK_INCLUDE_DIR}
-  ${SHOGUN_INCLUDE_DIR}
   GnuInstallDirs
 )
 
@@ -91,7 +88,6 @@ target_link_libraries (
   ${MLPACK_LIBRARY}
   ${LIBGP_LIBRARY}
   ${ARMADILLO_LIBRARIES}
-  ${SHOGUN_LIBRARY}
 )
 
 export(TARGETS ${LIBRARY_NAME} FILE "${PROJECT_BINARY_DIR}/ADEStargets.cmake")

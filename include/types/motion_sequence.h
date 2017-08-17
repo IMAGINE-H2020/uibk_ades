@@ -10,8 +10,6 @@
 #include <gp/gp.h>
 #include <gp/gp_utils.h>
 
-#include <shogun/clustering/GMM.h>
-
 #include "motion.h"
 #include "../utils/serializable.h"
 #include "../motions/dmp.h"
@@ -205,28 +203,112 @@ namespace ades {
          */
         double estimateEffectVariance(const std::string effectType, std::vector<double> input);
 
-
-        template <class Archive> void serialize(Archive & ar, const unsigned int version)
+        template <class Archive> void save(Archive & ar, const unsigned int version) const
         {
             ar.template register_type<DMPContainer>();
 
             ar & BOOST_SERIALIZATION_NVP(ID);
             ar & BOOST_SERIALIZATION_NVP(inputTypes_);
 
+            //GMM serialization
+            auto num_gmm_models = gmm_effectModels_.size();
+            ar & BOOST_SERIALIZATION_NVP(num_gmm_models);
+
             for(auto it : gmm_effectModels_)
             {
-                ar & mlpack::data::CreateNVP(it.second, it.first);
+                auto name = it.first;
+                auto model = it.second;
+                auto weights = model.Weights();
+                auto num_gaussians = model.Gaussians();
+
+                ar & BOOST_SERIALIZATION_NVP(name);
+                ar & BOOST_SERIALIZATION_NVP(weights);
+                ar & BOOST_SERIALIZATION_NVP(num_gaussians);
+
+                for(int i = 0; i < model.Gaussians(); ++i)
+                {
+                    auto component = model.Component(i);
+                    auto mean = component.Mean();
+                    auto covariance = component.Covariance();
+
+                    ar & BOOST_SERIALIZATION_NVP(mean);
+                    ar & BOOST_SERIALIZATION_NVP(covariance);
+                }
             }
 
-            /**
+            //GP serialization
+            std::vector<std::string> effectTypes;
             for(auto it : gp_effectModels_)
             {
-                //ar & BOOST_SERIALIZATION_NVP(it);
-                //ar & mlpack::data::CreateNVP(it.second, it.first);
-            }**/
+                effectTypes.push_back(it.first);
+            }
+
+            ar & BOOST_SERIALIZATION_NVP(effectTypes);
+
+            for(auto effect : effectTypes)
+            {
+                auto model = gp_effectModels_.at(effect);
+                std::string path = "/tmp/" + effect + ".effect";
+                model.write(path.c_str());
+            }
 
             ar & BOOST_SERIALIZATION_NVP(motions_);
         }
+
+        template <class Archive> void load(Archive & ar, const unsigned int version)
+        {
+            ar.template register_type<DMPContainer>();
+
+            ar & BOOST_SERIALIZATION_NVP(ID);
+            ar & BOOST_SERIALIZATION_NVP(inputTypes_);
+
+            //GMM deserialization
+            int num_gmm_models;
+            ar & BOOST_SERIALIZATION_NVP(num_gmm_models);
+
+            for(int i = 0; i < num_gmm_models; i++)
+            {
+                std::string name;
+                arma::vec weights;
+                int num_gaussians;
+
+                ar & BOOST_SERIALIZATION_NVP(name);
+                ar & BOOST_SERIALIZATION_NVP(weights);
+                ar & BOOST_SERIALIZATION_NVP(num_gaussians);
+
+                std::vector<mlpack::distribution::GaussianDistribution> dists;
+                for(int j = 0; j < num_gaussians; ++j)
+                {
+                    arma::vec mean;
+                    arma::mat covariance;
+
+                    ar & BOOST_SERIALIZATION_NVP(mean);
+                    ar & BOOST_SERIALIZATION_NVP(covariance);
+
+                    auto gaussian = mlpack::distribution::GaussianDistribution(mean, covariance);
+                    dists.push_back(gaussian);
+
+                }
+                auto model = mlpack::gmm::GMM(dists, weights);
+                gmm_effectModels_.insert(std::pair<std::string, mlpack::gmm::GMM>(name, model));
+            }
+
+            //GP deserialization
+            std::vector<std::string> effectTypes;
+            ar & BOOST_SERIALIZATION_NVP(effectTypes);
+
+            for(auto effect : effectTypes)
+            {
+                std::string path = "/tmp/" + effect + ".effect";
+                auto model = libgp::GaussianProcess(path.c_str());
+                gp_effectModels_.insert(std::pair<std::string, libgp::GaussianProcess>(effect, model));
+            }
+
+
+            ar & BOOST_SERIALIZATION_NVP(motions_);
+        }
+
+        BOOST_SERIALIZATION_SPLIT_MEMBER()
 
     };
 }
