@@ -94,13 +94,16 @@ export(TARGETS ${LIBRARY_NAME} FILE "${PROJECT_BINARY_DIR}/ADEStargets.cmake")
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${PROJECT_BINARY_DIR})
 list(APPEND CMAKE_LIBRARY_PATH ${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 
-install(TARGETS ${LIBRARY_NAME} LIBRARY DESTINATION /usr/lib)
 # Following part may be done more cleverly ?
+install(TARGETS ${LIBRARY_NAME} LIBRARY DESTINATION /usr/lib)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/Findlibimagine-ades.cmake DESTINATION /usr/lib/cmake/libades)
+
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/include/libades.h DESTINATION /usr/include/libades)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/motions DESTINATION /usr/include/libades)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/storage DESTINATION /usr/include/libades)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/types DESTINATION /usr/include/libades)
 install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/utils DESTINATION /usr/include/libades)
+
 
 # Adding example subdirectory
 add_subdirectory(examples)
