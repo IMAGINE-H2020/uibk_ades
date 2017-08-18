@@ -2,8 +2,9 @@
 
 #include <vector>
 #include "../types/ades.h"
-
-//#include "../utils/serializable.h"
+#include <boost/filesystem.hpp>
+#include <iostream>
+#include <type_traits>
 
 
 namespace ades {
@@ -40,6 +41,12 @@ namespace ades {
         {
             return ades_.size();
         }
+
+        /*! Adds a single Ades to this AdesDB.
+         *  \param ades : an ADES
+         */
+        void addAdes(Ades ades);
+
 
         /*! Adds a set of Ades to this AdesDB.
          *  \param ades : a vector of <Ades> to be added
