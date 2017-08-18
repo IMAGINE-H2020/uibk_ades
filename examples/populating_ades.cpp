@@ -166,7 +166,7 @@ int main(int argc, char **argv)
     std::cout << displayADESInfo(fakeADES) << std::endl;
 
     // Serializing ADES
-    std::string home =  "/tmp/ADESDB";
+    std::string home =  "/home/lokalmatador/Desktop/ADESDB";
     auto db = AdesDB(home, 0);
     db.addAdes(fakeADES);
 

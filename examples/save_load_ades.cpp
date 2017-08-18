@@ -84,15 +84,15 @@ std::string displayADESInfo(Ades & a)
 
           for(auto emit = effectprob.begin() ; emit != effectprob.end() ; emit++)
           {
-              output << "\t\t\t" << emit->first << ", dim: " << emit->second.Dimensionality() <<  ", nb gauss: " << emit->second.Gaussians() << std::endl; 
+              output << "\t\t\t" << emit->first << ", dim: " << emit->second.Dimensionality() <<  ", nb gauss: " << emit->second.Gaussians() << std::endl;
           }
-          
+
           output << "\t" << "Effect value models : " << std::endl;
           auto effectmean = (ams_it->second ).getGPEffectModels();
 
           for(auto emit = effectmean.begin() ; emit != effectmean.end() ; emit++)
           {
-              output << "\t\t\t" << emit->first << ", dim: " << emit->second.get_input_dim() <<  ", nb samples in dataset: " << emit->second.get_sampleset_size() << std::endl; 
+              output << "\t\t\t" << emit->first << ", dim: " << emit->second.get_input_dim() <<  ", nb samples in dataset: " << emit->second.get_sampleset_size() << std::endl;
           }
     }
     output << default_color << "----------------------";
@@ -101,16 +101,12 @@ std::string displayADESInfo(Ades & a)
 
 int main(int argc, char **argv)
 {
-    std::string ades_fn = "./serializedADES/fakeLeverAction.xml";
+    std::string home =  "/home/lokalmatador/Desktop/ADESDB";
 
-    Ades newADES = Ades("loadedADES");
+    AdesDB db(home, 0);
 
-    // Deserializing ADES :
+    for(auto ades : db.listAdes())
     {
-        std::ifstream ifs0(ades_fn);
-        boost::archive::xml_iarchive ia0(ifs0);
-        ia0 >> BOOST_SERIALIZATION_NVP(newADES);
+      std::cout << displayADESInfo(ades) << std::endl;
     }
-    newADES.setName("loadedAdes");
-    std::cout << displayADESInfo(newADES) << std::endl;
 }

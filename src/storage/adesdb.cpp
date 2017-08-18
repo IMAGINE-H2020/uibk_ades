@@ -1,5 +1,7 @@
 #include "../../include/storage/adesdb.h"
 
+#include <typeinfo>
+
 using namespace std;
 
 std::string DB_DIR;
@@ -27,14 +29,21 @@ namespace ades {
 
     bool AdesDB::populate()
     {
-        //load data
-        // 
-        // for each ades, 
-        //std::string ades_fn = "./serializedADES/fakeADES0.xml";
-        //std::ifstream ifs(home_);
-        //boost::archive::xml_iarchive ia(ifs);
-        //ia >> BOOST_SERIALIZATION_NVP(fakeADES0);
-        //ifs.close();
+        std::string ext = ".xml";
+
+        boost::filesystem::path path(home_.c_str());
+
+        for(auto& entry : boost::make_iterator_range(boost::filesystem::directory_iterator(path), {}))
+        {
+            if(entry.path().extension().compare(ext) == 0)
+            {
+                Ades temp;
+                std::ifstream ifs0(entry.path().c_str());
+                boost::archive::xml_iarchive ia0(ifs0);
+                ia0 >> BOOST_SERIALIZATION_NVP(temp);
+                ades_.push_back(temp);
+            }
+        }
         return true;
     }
 

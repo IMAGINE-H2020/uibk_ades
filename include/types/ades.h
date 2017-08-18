@@ -36,7 +36,7 @@ namespace ades {
          *  \param motions : map of <string, MotionSequence> specifying subsymbolic
          *                   motion sequences (see Motion and MotionSequence for more information)
          */
-        Ades(std::string name,
+        Ades(std::string name = "",
              std::map<std::string, std::string> preconditions = std::map<std::string, std::string>(),
              std::map<std::string, std::string> effects = std::map<std::string, std::string>(),
              std::map<std::string, MotionSequence> motions = std::map<std::string, MotionSequence>()

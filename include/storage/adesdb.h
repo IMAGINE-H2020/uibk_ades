@@ -5,6 +5,7 @@
 #include <boost/filesystem.hpp>
 #include <iostream>
 #include <type_traits>
+#include <string>
 
 
 namespace ades {
