@@ -43,6 +43,10 @@ namespace ades {
             return ades_.size();
         }
 
+        /*! Verify by name if Ades exists in AdesDB.
+         *  \param name : an ADES name
+         */
+        bool isInDB(std::string name);
         /*! Adds a single Ades to this AdesDB.
          *  \param ades : an ADES
          */
@@ -57,7 +61,8 @@ namespace ades {
         /*! Removes an Ades by name from this AdesDB.
          *  \param name : a name of <string> of the Ades to remove
          */
-        void removeAdesByName(std::string name);
+        //void removeAdesByName(std::string name);
+        bool removeAdesByName(std::string name);
 
 
         /*! Removes an Ades by ID from this AdesDB.
