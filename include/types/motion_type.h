@@ -5,6 +5,6 @@
 namespace ades {
 
      /*! Defining the types of movement representations currently support by libades. */
-    enum class MotionType { DMP, Cyclic, VisualServoing, PID };
+    enum class MotionType { DMP, Trajectory, Cyclic, VisualServoing, PID };
 
 }

@@ -13,6 +13,7 @@
 #include "motion.h"
 #include "../utils/serializable.h"
 #include "../motions/dmp.h"
+#include "../motions/trajectory.h"
 
 
 namespace ades {
@@ -206,6 +207,7 @@ namespace ades {
         template <class Archive> void save(Archive & ar, const unsigned int version) const
         {
             ar.template register_type<DMPContainer>();
+            ar.template register_type<TrajectoryContainer>();
 
             ar & BOOST_SERIALIZATION_NVP(ID);
             ar & BOOST_SERIALIZATION_NVP(inputTypes_);
