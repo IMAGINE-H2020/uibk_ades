@@ -60,6 +60,19 @@ namespace ades {
         return true;
     }
 
+    bool AdesDB::isInDB(std::string name)
+    {
+        bool isIn = false;
+        for(auto a : listAdes())
+        {
+            if(isIn = (a.getName() == name ))
+            {
+                break;
+            }
+        }
+        return isIn;
+    }
+
     void AdesDB::addAdes(Ades ades)
     {
         ades_.push_back(ades);
@@ -79,7 +92,8 @@ namespace ades {
         auto lambda = [name] (const Ades &a) { return a.getName() == name;};
         auto rem = remove_if(ades_.begin(), ades_.end(), lambda);
         auto result = ades_.erase(rem, ades_.end());
-        return result == ades_.end();
+        return isInDB(name);
+        //return result == ades_.end();
     }
 
     void AdesDB::removeAdesByID(uint64_t id)

@@ -43,6 +43,10 @@ namespace ades {
             return ades_.size();
         }
 
+        /*! Verify by name if Ades exists in AdesDB.
+         *  \param name : an ADES name
+         */
+        bool isInDB(std::string name);
         /*! Adds a single Ades to this AdesDB.
          *  \param ades : an ADES
          */
