@@ -73,11 +73,13 @@ namespace ades {
         }
     }
 
-    void AdesDB::removeAdesByName(string name)
+    //void AdesDB::removeAdesByName(string name)
+    bool AdesDB::removeAdesByName(string name)
     {
         auto lambda = [name] (const Ades &a) { return a.getName() == name;};
         auto rem = remove_if(ades_.begin(), ades_.end(), lambda);
-        ades_.erase(rem, ades_.end());
+        auto result = ades_.erase(rem, ades_.end());
+        return result == ades_.end();
     }
 
     void AdesDB::removeAdesByID(uint64_t id)

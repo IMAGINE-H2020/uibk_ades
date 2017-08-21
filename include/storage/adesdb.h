@@ -57,7 +57,8 @@ namespace ades {
         /*! Removes an Ades by name from this AdesDB.
          *  \param name : a name of <string> of the Ades to remove
          */
-        void removeAdesByName(std::string name);
+        //void removeAdesByName(std::string name);
+        bool removeAdesByName(std::string name);
 
 
         /*! Removes an Ades by ID from this AdesDB.
