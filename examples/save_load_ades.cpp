@@ -101,8 +101,7 @@ std::string displayADESInfo(Ades & a)
 
 int main(int argc, char **argv)
 {
-    std::string home =  "/home/lokalmatador/Desktop/ADESDB";
-
+    std::string home =  std::string(getenv("HOME"))+"/ADESDB";
     AdesDB db(home, 0);
 
     for(auto ades : db.listAdes())

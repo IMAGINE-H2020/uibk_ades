@@ -245,10 +245,14 @@ namespace ades {
 
             ar & BOOST_SERIALIZATION_NVP(effectTypes);
 
+            std::ostringstream oss;
+            oss << ID;
+            std::string ID_(oss.str());
+
             for(auto effect : effectTypes)
             {
                 auto model = gp_effectModels_.at(effect);
-                std::string path = DB_DIR + "/" + effect + ".effect";
+                std::string path = DB_DIR + "/" + effect + "_" + ID_ + ".effect";
                 model.write(path.c_str());
             }
 
@@ -297,9 +301,13 @@ namespace ades {
             std::vector<std::string> effectTypes;
             ar & BOOST_SERIALIZATION_NVP(effectTypes);
 
+            std::ostringstream oss;
+            oss << ID;
+            std::string ID_(oss.str());
+
             for(auto effect : effectTypes)
             {
-                std::string path = DB_DIR + "/" + effect + ".effect";
+                std::string path = DB_DIR + "/" + effect + "_" + ID_ + ".effect";
                 auto model = libgp::GaussianProcess(path.c_str());
                 gp_effectModels_.insert(std::pair<std::string, libgp::GaussianProcess>(effect, model));
             }

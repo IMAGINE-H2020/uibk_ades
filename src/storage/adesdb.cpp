@@ -1,7 +1,5 @@
 #include "../../include/storage/adesdb.h"
 
-#include <typeinfo>
-
 using namespace std;
 
 std::string DB_DIR;
@@ -49,6 +47,11 @@ namespace ades {
 
     bool AdesDB::serialize()
     {
+        boost::filesystem::path path_to_remove(home_.c_str());
+        for (boost::filesystem::directory_iterator end_dir_it, it(path_to_remove); it!=end_dir_it; ++it) {
+            boost::filesystem::remove_all(it->path());
+        }
+
         for (auto ades : ades_)
         {
             std::string path = home_ + "/" + ades.getName() + ".xml";
@@ -62,14 +65,22 @@ namespace ades {
 
     void AdesDB::addAdes(Ades ades)
     {
-        ades_.push_back(ades);
+        string name = ades.getName();
+        auto lambda = [name] (const Ades &a) { return a.getName() == name;};
+        auto elem = find_if(ades_.begin(), ades_.end(), lambda);
+        if(elem == ades_.end()) {
+            ades_.push_back(ades);
+        } else {
+            cout << "Skipping ADES: " << ades.getName() << ". Please call" <<
+                " updateAdes* if you want to update. " << endl;
+        }
     }
 
     void AdesDB::addAdes(vector<Ades> ades)
     {
         for(auto ades__ : ades)
         {
-            ades_.push_back(ades__);
+            addAdes(ades__);
         }
     }
 
