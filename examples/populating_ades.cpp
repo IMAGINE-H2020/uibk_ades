@@ -162,8 +162,8 @@ int main(int argc, char **argv)
 
     firstMotionSequence.insertMotion(0, &fakeDMP);
     firstMotionSequence.insertMotion(1, &fakeDMP2);
-    firstMotionSequence.insertMotion(2, &fakeDMP);
-    //firstMotionSequence.insertMotion(3, &fakeTraj);
+    firstMotionSequence.insertMotion(2, &fakeTraj);
+    firstMotionSequence.insertMotion(3, &fakeDMP);
 
 
     // Model of the probability of gap surfance variation:
