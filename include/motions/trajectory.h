@@ -14,6 +14,22 @@ namespace ades {
             {
             }
 
+            //TrajectoryContainer(std::vector<double> x = std::vector<double>(), std::vector<double> y = std::vector<double>()) 
+            TrajectoryContainer(std::vector<double> x, std::vector<double> y) 
+            {
+                if( x.size() != y.size() )
+                {
+                    std::cout << "Error; sizes need to be the same on x and y axis" << std::endl;
+                }
+                else
+                {
+                    for(auto i=0 ; i < x.size() ; i++)
+                    {
+                        points.push_back(std::pair<double, double>(x.at(i), y.at(i)));
+                    }
+                }
+            }
+
             TrajectoryContainer(const TrajectoryContainer & d) :
                 points(d.points)
             {
