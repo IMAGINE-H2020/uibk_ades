@@ -146,6 +146,16 @@ int main(int argc, char **argv)
     fakeDMP.setName("fakeDMP1");
     fakeDMP2.setName("fakeDMP2");
 
+    std::vector<std::pair<double, double>> traj_points;
+    for(int i = 0 ; i < 10 ; i++)
+    {
+        double x=(double)((rand()%1000 - 500)/500.0);
+        double y=(double)((rand()%1000 - 500)/500.0);
+        traj_points.push_back(std::pair<double, double>(x,y));
+    }
+    TrajectoryContainer fakeTraj(traj_points);
+    fakeTraj.setName("fakeTraj1");
+
     // Chaining twice the same gesture
     firstMotionSequence.insertInputTypes(fakeInputTypes);
 
@@ -153,6 +163,7 @@ int main(int argc, char **argv)
     firstMotionSequence.insertMotion(0, &fakeDMP);
     firstMotionSequence.insertMotion(1, &fakeDMP2);
     firstMotionSequence.insertMotion(2, &fakeDMP);
+    //firstMotionSequence.insertMotion(3, &fakeTraj);
 
 
     // Model of the probability of gap surfance variation:
@@ -167,7 +178,9 @@ int main(int argc, char **argv)
 
     // Serializing ADES
     std::string home =  std::string(getenv("HOME"))+"/ADESDB";
+    std::cout << "Opening database at: " << home << std::endl;
     auto db = AdesDB(home, 0);
+    std::cout << "Storing ADES" << std::endl;
     db.addAdes(fakeADES);
 
     std::cout << "Done." << std::endl;
