@@ -264,6 +264,7 @@ namespace ades {
         template <class Archive> void load(Archive & ar, const unsigned int version)
         {
             ar.template register_type<DMPContainer>();
+            ar.template register_type<TrajectoryContainer>();
 
             ar & BOOST_SERIALIZATION_NVP(ID);
             ar & BOOST_SERIALIZATION_NVP(inputTypes_);
