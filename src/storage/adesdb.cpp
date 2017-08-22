@@ -14,6 +14,7 @@ namespace ades {
         boost::filesystem::path path(home_.c_str());
         if (boost::filesystem::exists(path))
         {
+            std::cout << "path:" << path << std::endl;
             populate();
         } else {
             boost::filesystem::create_directories(path);
@@ -68,7 +69,7 @@ namespace ades {
         bool isIn = false;
         for(auto a : listAdes())
         {
-            if(isIn = (a.getName() == name ))
+            if((isIn = (a.getName() == name )))
             {
                 break;
             }
