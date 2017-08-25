@@ -25,7 +25,7 @@ namespace ades {
 
             // Constructor for 2d array
             //TrajectoryContainer(std::vector<double> x = std::vector<double>(), std::vector<double> y = std::vector<double>()) 
-            TrajectoryContainer(std::vector<double> x, std::vector<double> y) 
+            /*TrajectoryContainer(std::vector<double> x, std::vector<double> y) 
             {
                 if( x.size() != y.size() )
                 {
@@ -41,7 +41,7 @@ namespace ades {
                         points.push_back(point2d);
                     }
                 }
-            }
+            }*/
 
             TrajectoryContainer(const TrajectoryContainer & d) :
                 points(d.points)
