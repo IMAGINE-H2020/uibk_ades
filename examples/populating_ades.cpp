@@ -146,13 +146,22 @@ int main(int argc, char **argv)
     fakeDMP.setName("fakeDMP1");
     fakeDMP2.setName("fakeDMP2");
 
-    std::vector<std::pair<double, double>> traj_points;
+    std::vector<std::vector<double>> traj_points;
+    std::vector<double> point_x;
+    std::vector<double> point_y;
+    std::vector<double> point_z;
     for(int i = 0 ; i < 10 ; i++)
     {
         double x=(double)((rand()%1000 - 500)/500.0);
         double y=(double)((rand()%1000 - 500)/500.0);
-        traj_points.push_back(std::pair<double, double>(x,y));
+        double z=(double)((rand()%1000 - 500)/500.0);
+        point_x.push_back(x);
+        point_y.push_back(y);
+        point_z.push_back(z);
     }
+    traj_points.push_back(point_x);
+    traj_points.push_back(point_y);
+    traj_points.push_back(point_z);
     TrajectoryContainer fakeTraj(traj_points);
     fakeTraj.setName("fakeTraj1");
 
