@@ -229,25 +229,11 @@ namespace ades {
                 ar & BOOST_SERIALIZATION_NVP(weights);
                 ar & BOOST_SERIALIZATION_NVP(num_gaussians);
 
-                std::cout << "-------------------------------" << std::endl;
-                std::cout << "Model: " << name << ", w: " << weights << ", g: " << num_gaussians << std::endl;
-
                 for(int i = 0; i < model.Gaussians(); i++)
                 {
                     auto component = model.Component(i);
                     auto pc = &component;
                     ar & mlpack::data::CreateNVP(model.Component(i), "comp"+std::to_string(i));
-                    //auto mean = component.Mean();
-                    //auto covariance = component.Covariance();
-                    std::cout << "Type of variables to be saved : " << typeid(component).name() << ", " << typeid(pc).name() << std::endl;
-                    //std::cout << "Type of variables to be saved : " << typeid(component).name() << ", " << typeid(pc).name() << ", " <<  typeid(mean).name() << ", " << typeid(covariance).name() << std::endl;
-                    //std::cout << "Values of variables to be saved : " << size(mean) << ", " << size(covariance) << std::endl;
-                    //std::cout << "type of size : " << typeid(size(mean)).name() << std::endl;
-
-                    //ar & BOOST_SERIALIZATION_NVP(mean);
-                    //ar & BOOST_SERIALIZATION_NVP(covariance);
-                    //std::cout << "\033[32mSaving gaussian " << i << " of mean " << mean << std::endl;
-                   // << covariance << "\033[39m" << std::endl;
                 }
             }
 
@@ -296,27 +282,11 @@ namespace ades {
                 ar & BOOST_SERIALIZATION_NVP(weights);
                 ar & BOOST_SERIALIZATION_NVP(num_gaussians);
 
-                std::cout << "-------------------------------" << std::endl;
-                std::cout << "Model: " << name << ", w: " << weights << ", g: " << num_gaussians << std::endl;
-
                 std::vector<mlpack::distribution::GaussianDistribution> dists;
                 for(int j = 0; j < num_gaussians; j++)
                 {
                     mlpack::distribution::GaussianDistribution d;
                     ar & mlpack::data::CreateNVP(d, "comp"+std::to_string(j));
-
-                    //arma::vec mean;
-                    //arma::mat covariance;
-
-                    //ar & BOOST_SERIALIZATION_NVP(mean);
-                    //ar & BOOST_SERIALIZATION_NVP(covariance);
-                    //std::cout << "Type of variables to be loaded : " << typeid(mean).name() << ", " << typeid(covariance).name() << std::endl;
-                    //std::cout << "Values of variables to be loaded : " << size(mean) << "\n" << size(covariance) << std::endl;
-                    //std::cout << "type of size : " << typeid(size(mean)).name() << std::endl;
-
-                    //auto gaussian = mlpack::distribution::GaussianDistribution(mean, covariance);
-                    //std::cout << "\033[36mLoading gaussian " << j << " of mean " << mean << "\033[39m" << std::endl;
-                    //dists.push_back(gaussian);
                     dists.push_back(d);
 
                 }
