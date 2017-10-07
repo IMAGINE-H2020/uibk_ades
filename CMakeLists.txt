@@ -83,7 +83,7 @@ if(DOXYGEN_FOUND)
         )
 endif(DOXYGEN_FOUND)
 
-message(STATUS "Depending on your eigen installation, you may have to create symbolic links so let Eigen/Dense be found at runtime :
+message(STATUS "Depending on your eigen installation, you may have to create symbolic links for that Eigen/Dense are found at runtime :
     cd <your/path/to/eigen>
     sudo ln -sf eigen3/Eigen Eigen
     sudo ln -sf eigen3/unsupported unsupported")
