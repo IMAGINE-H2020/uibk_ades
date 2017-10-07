@@ -17,15 +17,15 @@ target_link_libraries(${LIBRARY_NAME}
 	libgp
 	mlpack)
 	
-install(TARGETS ${LIBRARY_NAME} EXPORT ImagineAdesConfig
+install(TARGETS ${LIBRARY_NAME} EXPORT LibADESConfig
 	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
 	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
 	RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})   # for Windows
 install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
-install(EXPORT ImagineAdesConfig DESTINATION share/ImagineAdes/cmake) 
+install(EXPORT LibADESConfig DESTINATION share/LibADES/cmake) 
 
-export(TARGETS ${LIBRARY_NAME} FILE ImagineAdesConfig.cmake)
+export(TARGETS ${LIBRARY_NAME} FILE LibADESConfig.cmake)
 
 
 	
