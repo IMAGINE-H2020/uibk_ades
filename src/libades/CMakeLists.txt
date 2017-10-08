@@ -16,7 +16,6 @@ target_link_libraries(${LIBRARY_NAME}
 	mlpack)
 
 install(TARGETS ${LIBRARY_NAME}
-  # IMPORTANT: Add the libades library to the "export-set"
   EXPORT LibADESTargets
   RUNTIME DESTINATION ${INSTALL_BIN_DIR} COMPONENT bin
   LIBRARY DESTINATION ${INSTALL_LIB_DIR} COMPONENT lib
@@ -24,5 +23,6 @@ install(TARGETS ${LIBRARY_NAME}
   PUBLIC_HEADER DESTINATION ${INSTALL_INCLUDE_DIR}/${LIBRARY_NAME}
     COMPONENT dev)
 
+#Dirty way of copying header infrestructure
 install(DIRECTORY include/ DESTINATION ${INSTALL_INCLUDE_DIR}/${LIBRARY_NAME}
         FILES_MATCHING PATTERN "*.h")

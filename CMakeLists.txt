@@ -1,13 +1,12 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
 project(libades LANGUAGES CXX)
 
+
+# Some properties
 set(LIBADES_MAJOR_VERSION 0)
 set(LIBADES_MINOR_VERSION 1)
 set(LIBADES_PATCH_VERSION 0)
-set(LIBADES_VERSION
-	${LIBADES_MAJOR_VERSION}.${LIBADES_MINOR_VERSION}.${LIBADES_PATCH_VERSION})
-
-# Some properties
+set(LIBADES_VERSION ${LIBADES_MAJOR_VERSION}.${LIBADES_MINOR_VERSION}.${LIBADES_PATCH_VERSION})
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_BUILD_TYPE Debug)
 set(LIBRARY_NAME libades)
@@ -20,7 +19,6 @@ set(INSTALL_INCLUDE_DIR include CACHE PATH "Installation directory for header fi
 set(DEF_INSTALL_CMAKE_DIR lib/cmake/${LIBRARY_NAME}/)
 set(INSTALL_CMAKE_DIR ${DEF_INSTALL_CMAKE_DIR} CACHE PATH
   "Installation directory for CMake files")
-
 # Make relative paths absolute (needed later on)
 foreach(p LIB BIN INCLUDE CMAKE)
   set(var INSTALL_${p}_DIR)
