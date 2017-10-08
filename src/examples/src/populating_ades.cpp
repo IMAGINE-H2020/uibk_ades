@@ -6,7 +6,7 @@
 #include <iostream>
 #include <type_traits>
 
-#include "../include/libades.h"
+#include <libades/libades.h>
 #include <boost/filesystem.hpp>
 
 using namespace ades;

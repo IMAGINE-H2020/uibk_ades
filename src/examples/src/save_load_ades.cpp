@@ -6,11 +6,8 @@
 #include <iostream>
 #include <type_traits>
 
-#include "../include/storage/adesdb.h"
-#include "../include/types/ades.h"
-#include "../include/types/motion_sequence.h"
-#include "../include/types/motion_type.h"
-#include "../include/utils/serializable.h"
+#include <libades/libades.h>
+
 
 using namespace ades;
 

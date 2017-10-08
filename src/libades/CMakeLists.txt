@@ -1,31 +1,28 @@
-project(${LIBRARY_NAME} VERSION 0.1 LANGUAGES CXX)
+configure_file(config.h.in "${CMAKE_CURRENT_BINARY_DIR}/config.h" @ONLY)
 
-add_library(${LIBRARY_NAME} STATIC
+add_library(${LIBRARY_NAME} SHARED
 	src/storage/adesdb.cpp
 	src/types/ades.cpp
 	src/types/motion_sequence.cpp
 	src/types/motion_type.cpp)
 
-set_target_properties(${LIBRARY_NAME} PROPERTIES VERSION ${PROJECT_VERSION})
-
-target_include_directories(${LIBRARY_NAME} PUBLIC
-	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-	$<INSTALL_INTERFACE:include/libades>
-	PRIVATE src)
+set_target_properties(${LIBRARY_NAME} PROPERTIES
+  PUBLIC_HEADER "include/libades.h;${CMAKE_CURRENT_BINARY_DIR}/config.h")
 
 target_link_libraries(${LIBRARY_NAME}
 	boost
 	armadillo
 	libgp
 	mlpack)
-	
-install(TARGETS ${LIBRARY_NAME} EXPORT LibADESConfig 
-	ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-	LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-	RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})   # for Windows
 
-install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/libades)
+install(TARGETS ${LIBRARY_NAME}
+  # IMPORTANT: Add the libades library to the "export-set"
+  EXPORT LibADESTargets
+  RUNTIME DESTINATION ${INSTALL_BIN_DIR} COMPONENT bin
+  LIBRARY DESTINATION ${INSTALL_LIB_DIR} COMPONENT lib
+  ARCHIVE DESTINATION ${INSTALL_LIB_DIR} COMPONENT lib
+  PUBLIC_HEADER DESTINATION ${INSTALL_INCLUDE_DIR}/${LIBRARY_NAME}
+    COMPONENT dev)
 
-install(EXPORT LibADESConfig DESTINATION share/LibADES/cmake) 
-
-export(TARGETS ${LIBRARY_NAME} FILE LibADESConfig.cmake)
+install(DIRECTORY include/ DESTINATION ${INSTALL_INCLUDE_DIR}/${LIBRARY_NAME}
+        FILES_MATCHING PATTERN "*.h")

@@ -1,0 +1,17 @@
+# - Config file for the LibADES package
+# It defines the following variables
+#  LIBADES_INCLUDE_DIRS - include directories for LibADES
+#  LIBADES_LIBRARIES    - libraries to link against
+#  LIBADES_EXECUTABLE   - the bar executable
+ 
+# Compute paths
+get_filename_component(LIBADES_CMAKE_DIR "${CMAKE_CURRENT_LIST_FILE}" PATH)
+set(LIBADES_INCLUDE_DIRS "@CONF_INCLUDE_DIRS@")
+ 
+# Our library dependencies (contains definitions for IMPORTED targets)
+if(NOT TARGET foo AND NOT FooBar_BINARY_DIR)
+	include("${LIBADES_CMAKE_DIR}/LibADESTargets.cmake")
+endif()
+ 
+# These are IMPORTED targets created by LibADESTargets.cmake
+set(LIBADES_LIBRARIES libades)
