@@ -93,7 +93,7 @@ set_property(TARGET libgp PROPERTY
 
 # TARGETS
 add_subdirectory(src/libades)
-add_subdirectory(src/examples)
+add_subdirectory(src/examples EXCLUDE_FROM_ALL)
 
 
 # Add all targets to the build-tree export set
@@ -132,7 +132,7 @@ install(EXPORT LibADESTargets DESTINATION
 
 # Documentation
 # first we can indicate the documentation build as an option and set it to ON by default
-option(BUILD_DOC "Build documentation" ON)
+option(BUILD_DOC "Build documentation" OFF)
 
 # check if Doxygen is installed
 find_package(Doxygen)
