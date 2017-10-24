@@ -37,10 +37,10 @@ make populating_ades
 make populating_db
 make save_load_ades
 ```
-and isntalled by calling
+and subsequently installed by calling
 ```
 sudo make install
 ```
-They demonstrate basic usage of the library. A ROS wrapper is temporary available [here](https://github.com/r1d1/iis_libades_ros) for easy integration with robot software. It provides some services to interact with the ADES database and ADES data structures. The intented use of this library is through the node, but if you develop a different interface, we'll be happy to know about.
+Observe that for this you first have to successfully install the library. They demonstrate basic usage of the library. A ROS wrapper is temporary available [here](https://github.com/r1d1/iis_libades_ros) for easy integration with robot software. It provides some services to interact with the ADES database and ADES data structures. The intented use of this library is through the node, but if you develop a different interface, we'll be happy to know about.
 
 **IMPORTANT NOTE**: as the library is under active development, saved ADES are usually not compatible with newer versions of the library (i.e. do not use the last version of the library if you want to keep use of an older version of the ADES). A fix will be issued as soon as possible.
