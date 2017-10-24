@@ -93,7 +93,7 @@ set_property(TARGET libgp PROPERTY
 
 # TARGETS
 add_subdirectory(src/libades)
-add_subdirectory(src/examples)
+add_subdirectory(src/examples EXCLUDE_FROM_ALL)
 
 
 # Add all targets to the build-tree export set
