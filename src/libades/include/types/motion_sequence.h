@@ -9,6 +9,7 @@
 #include <armadillo>
 #include <gp/gp.h>
 #include <gp/gp_utils.h>
+#include <gp/rprop.h>
 
 #include "motion.h"
 #include "../utils/serializable.h"

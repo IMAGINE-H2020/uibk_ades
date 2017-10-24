@@ -99,18 +99,35 @@ namespace ades {
     {
         double* input_ = &input[0];
         gp_effectModels_.at(effectType).add_pattern(input_, effect);
+        // optimizing with Rprop as recommended in the lib
+        libgp::RProp rprop;
+        rprop.init();
+        rprop.maximize(&(gp_effectModels_.at(effectType)), 50, true);
     }
 
     double MotionSequence::estimateEffectLikelihood(const std::string effectType, std::vector<double> input, double effect)
     {
         input.push_back(effect);
         arma::vec input_(input);
+        std::cout << "estimate effect likelihood" << std::endl;
+        std::cout << input_ << std::endl;
         return gmm_effectModels_.at(effectType).Probability(input_);
     }
 
     double MotionSequence::estimateEffect(const std::string effectType, std::vector<double> input)
     {
-        double const* input_ = &input[0];
+        //double const* input_ = &input[0];
+        double const * input_ = input.data();
+        //input.size()
+        //const double input_ = ;
+        std::cout << "estimate effect" << std::endl;
+        std::cout << input[0] << std::endl;
+        const double input1_[2] = {0.0, 0.0};
+        const double input2_[2] = {1.0, 0.0};
+        const double input3_[2] = {-3.0, 3.0};
+        std::cout << gp_effectModels_.at(effectType).f(input1_) << std::endl;
+        std::cout << gp_effectModels_.at(effectType).f(input2_) << std::endl;
+        std::cout << gp_effectModels_.at(effectType).f(input3_) << std::endl;
         return gp_effectModels_.at(effectType).f(input_);
     }
 
