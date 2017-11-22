@@ -27,7 +27,7 @@ make (-j4)
 sudo make install
 ```
 
-Files will be installed in ```/usr/lib``` and ```/usr/include```, and are assumed to be there when searched by the ROS node (see below). Consider updating these path if you follow a different organisation.
+Files will be installed in ```/usr/local/lib``` and ```/usr/local/include```, and cmake-related files are in ```/usr/local/lib/cmake/``` to find() can be used in other packages linking to libades (e.g. when building the ROS node - see below). Consider updating these path if you follow a different organisation.
 
 ## Usage
 
