@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.2 FATAL_ERROR)
-project(libades LANGUAGES CXX)
+project(ades LANGUAGES CXX)
 
 
 # Some properties
@@ -9,7 +9,7 @@ set(LIBADES_PATCH_VERSION 0)
 set(LIBADES_VERSION ${LIBADES_MAJOR_VERSION}.${LIBADES_MINOR_VERSION}.${LIBADES_PATCH_VERSION})
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_BUILD_TYPE Debug)
-set(LIBRARY_NAME libades)
+set(LIBRARY_NAME ades)
 
 
 # Offer the user the choice of overriding the installation directories
@@ -107,12 +107,12 @@ add_subdirectory(src/examples EXCLUDE_FROM_ALL)
 
 
 # Add all targets to the build-tree export set
-export(TARGETS libades populating_ades populating_db save_load_ades
+export(TARGETS ades populating_ades populating_db save_load_ades
 	FILE "${PROJECT_BINARY_DIR}/LibADESTargets.cmake")
 
 # Export the package for use from the build-tree
 # (this registers the build-tree with a global CMake-registry)
-export(PACKAGE libades)
+export(PACKAGE ades)
 
 # Create the LibADESConfig.cmake and LibADESConfigVersion files
 file(RELATIVE_PATH REL_INCLUDE_DIR "${INSTALL_CMAKE_DIR}"
