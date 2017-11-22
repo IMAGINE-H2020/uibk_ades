@@ -43,4 +43,4 @@ Observe that for this you first have to successfully install the library. They d
 
 **IMPORTANT NOTE**: as the library is under active development, saved ADES are usually not compatible with newer versions of the library (i.e. do not use the last version of the library if you want to keep use of an older version of the ADES). A fix will be issued as soon as possible.
 
-**IMPORTANT NOTE**: for now there is a known issue with the ```INCLUDE_TARGETS``` inside the `CMakeLists.txt` file of this project. In case your dependent project complains about those, just copy them from the main `CMakeLists.txt` file of this project into your project's `CMakeLists.txt`.
+**IMPORTANT NOTE**: for now there is a known issue with the ```INCLUDE_TARGETS``` defined inside the `CMakeLists.txt` file of this project. In case your dependent project complains about those not being defined, just copy them from the main `CMakeLists.txt` file of this project into your project's `CMakeLists.txt`.
