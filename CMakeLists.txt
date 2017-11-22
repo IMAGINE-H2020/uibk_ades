@@ -3,10 +3,10 @@ project(ades LANGUAGES CXX)
 
 
 # Some properties
-set(LIBADES_MAJOR_VERSION 0)
-set(LIBADES_MINOR_VERSION 1)
-set(LIBADES_PATCH_VERSION 0)
-set(LIBADES_VERSION ${LIBADES_MAJOR_VERSION}.${LIBADES_MINOR_VERSION}.${LIBADES_PATCH_VERSION})
+set(ADES_MAJOR_VERSION 0)
+set(ADES_MINOR_VERSION 1)
+set(ADES_PATCH_VERSION 0)
+set(ADES_VERSION ${ADES_MAJOR_VERSION}.${ADES_MINOR_VERSION}.${ADES_PATCH_VERSION})
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_BUILD_TYPE Debug)
 set(LIBRARY_NAME ades)
@@ -107,14 +107,13 @@ add_subdirectory(src/examples EXCLUDE_FROM_ALL)
 
 
 # Add all targets to the build-tree export set
-export(TARGETS ades
-	FILE "${PROJECT_BINARY_DIR}/ADESTargets.cmake")
+export(TARGETS ades FILE "${PROJECT_BINARY_DIR}/ADESTargets.cmake")
 
 # Export the package for use from the build-tree
 # (this registers the build-tree with a global CMake-registry)
 export(PACKAGE ades)
 
-# Create the LibADESConfig.cmake and LibADESConfigVersion files
+# Create the ADESConfig.cmake and ADESConfigVersion files
 file(RELATIVE_PATH REL_INCLUDE_DIR "${INSTALL_CMAKE_DIR}"
 	"${INSTALL_INCLUDE_DIR}")
 # ... for the build tree
@@ -122,22 +121,24 @@ set(CONF_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
 configure_file(ADESConfig.cmake.in
 	"${PROJECT_BINARY_DIR}/AdesConfig.cmake" @ONLY)
 # ... for the install tree
-set(CONF_INCLUDE_DIRS "\${LIBADES_CMAKE_DIR}/${REL_INCLUDE_DIR}")
+set(CONF_INCLUDE_DIRS "\${ADES_CMAKE_DIR}/${REL_INCLUDE_DIR}")
 configure_file(ADESConfig.cmake.in
 	"${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/ADESConfig.cmake" @ONLY)
 # ... for both
 configure_file(ADESConfigVersion.cmake.in
 	"${PROJECT_BINARY_DIR}/ADESConfigVersion.cmake" @ONLY)
 
-# Install the LibADESConfig.cmake and LibADESConfigVersion.cmake
+# Install the ADESConfig.cmake and ADESConfigVersion.cmake
 install(FILES
 	"${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/ADESConfig.cmake"
 	"${PROJECT_BINARY_DIR}/ADESConfigVersion.cmake"
 	DESTINATION "${INSTALL_CMAKE_DIR}" COMPONENT dev)
 
+
+#THIS I REMOVED
 # Install the export set for use with the install-tree
-install(EXPORT ADESTargets DESTINATION
-	"${INSTALL_CMAKE_DIR}" COMPONENT dev)
+#install(EXPORT ADESTargets DESTINATION
+#	"${INSTALL_CMAKE_DIR}" COMPONENT dev)
 
 
 # Documentation
@@ -147,7 +148,7 @@ option(BUILD_DOC "Build documentation" OFF)
 # check if Doxygen is installed
 find_package(Doxygen)
 if(BUILD_DOC)
-	if (DOXYGEN_FOUND)	
+	if (DOXYGEN_FOUND)
 		# set input and output files
 		set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile.in)
 		set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
