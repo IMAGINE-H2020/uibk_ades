@@ -6,7 +6,7 @@
 #include <iostream>
 #include <type_traits>
 
-#include <libades/libades.h>
+#include <ades/libades.h>
 
 
 using namespace ades;
@@ -81,15 +81,15 @@ std::string displayADESInfo(Ades & a)
 
           for(auto emit = effectprob.begin() ; emit != effectprob.end() ; emit++)
           {
-              output << "\t\t\t" << emit->first << ", dim: " << emit->second.Dimensionality() <<  ", nb gauss: " << emit->second.Gaussians() << std::endl; 
+              output << "\t\t\t" << emit->first << ", dim: " << emit->second.Dimensionality() <<  ", nb gauss: " << emit->second.Gaussians() << std::endl;
           }
-          
+
           output << "\t" << "Effect value models : " << std::endl;
           auto effectmean = (ams_it->second ).getGPEffectModels();
 
           for(auto emit = effectmean.begin() ; emit != effectmean.end() ; emit++)
           {
-              output << "\t\t\t" << emit->first << ", dim: " << emit->second.get_input_dim() <<  ", nb samples in dataset: " << emit->second.get_sampleset_size() << std::endl; 
+              output << "\t\t\t" << emit->first << ", dim: " << emit->second.get_input_dim() <<  ", nb samples in dataset: " << emit->second.get_sampleset_size() << std::endl;
           }
     }
     output << default_color << "----------------------";

@@ -7,7 +7,7 @@ add_executable(populating_db
 add_executable(save_load_ades
 	src/save_load_ades.cpp)
 
-target_link_libraries(populating_ades 
+target_link_libraries(populating_ades
 	${LIBRARY_NAME})
 
 target_link_libraries(populating_db
@@ -15,15 +15,3 @@ target_link_libraries(populating_db
 
 target_link_libraries(save_load_ades
        	${LIBRARY_NAME})
-
-install(TARGETS populating_ades
-  EXPORT LibADESTargets
-  RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin)
-
-install(TARGETS populating_db
-  EXPORT LibADESTargets
-  RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin)
-
-install(TARGETS save_load_ades
-  EXPORT LibADESTargets
-  RUNTIME DESTINATION "${INSTALL_BIN_DIR}" COMPONENT bin)

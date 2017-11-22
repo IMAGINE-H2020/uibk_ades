@@ -107,8 +107,8 @@ add_subdirectory(src/examples EXCLUDE_FROM_ALL)
 
 
 # Add all targets to the build-tree export set
-export(TARGETS ades populating_ades populating_db save_load_ades
-	FILE "${PROJECT_BINARY_DIR}/LibADESTargets.cmake")
+export(TARGETS ades
+	FILE "${PROJECT_BINARY_DIR}/ADESTargets.cmake")
 
 # Export the package for use from the build-tree
 # (this registers the build-tree with a global CMake-registry)
@@ -119,24 +119,24 @@ file(RELATIVE_PATH REL_INCLUDE_DIR "${INSTALL_CMAKE_DIR}"
 	"${INSTALL_INCLUDE_DIR}")
 # ... for the build tree
 set(CONF_INCLUDE_DIRS "${PROJECT_SOURCE_DIR}" "${PROJECT_BINARY_DIR}")
-configure_file(LibADESConfig.cmake.in
-	"${PROJECT_BINARY_DIR}/LibAdesConfig.cmake" @ONLY)
+configure_file(ADESConfig.cmake.in
+	"${PROJECT_BINARY_DIR}/AdesConfig.cmake" @ONLY)
 # ... for the install tree
 set(CONF_INCLUDE_DIRS "\${LIBADES_CMAKE_DIR}/${REL_INCLUDE_DIR}")
-configure_file(LibADESConfig.cmake.in
-	"${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/LibADESConfig.cmake" @ONLY)
+configure_file(ADESConfig.cmake.in
+	"${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/ADESConfig.cmake" @ONLY)
 # ... for both
-configure_file(LibADESConfigVersion.cmake.in
-	"${PROJECT_BINARY_DIR}/LibADESConfigVersion.cmake" @ONLY)
+configure_file(ADESConfigVersion.cmake.in
+	"${PROJECT_BINARY_DIR}/ADESConfigVersion.cmake" @ONLY)
 
 # Install the LibADESConfig.cmake and LibADESConfigVersion.cmake
 install(FILES
-	"${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/LibADESConfig.cmake"
-	"${PROJECT_BINARY_DIR}/LibADESConfigVersion.cmake"
+	"${PROJECT_BINARY_DIR}${CMAKE_FILES_DIRECTORY}/ADESConfig.cmake"
+	"${PROJECT_BINARY_DIR}/ADESConfigVersion.cmake"
 	DESTINATION "${INSTALL_CMAKE_DIR}" COMPONENT dev)
 
 # Install the export set for use with the install-tree
-install(EXPORT LibADESTargets DESTINATION
+install(EXPORT ADESTargets DESTINATION
 	"${INSTALL_CMAKE_DIR}" COMPONENT dev)
 
 
