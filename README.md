@@ -50,7 +50,7 @@ To use this library in your own projects, just add the necessary find package di
 ```
 FIND_PACKAGE(ADES)
 ```
-which then will readily import necessary include files under the `ADES_INCLUDE_DIRS` tag and the library under `ADES_LIBRARY`. Do not forget to add an ```#include <ades/libades.h> include directive in your code.
+which then will readily import necessary include files under the `ADES_INCLUDE_DIRS` variable and the library under `ADES_LIBRARY` variable, respectively. Do not forget to add an ```#include <ades/libades.h>``` directive in your code.
 
 ## Uninstall
 Bey default, CMake does not provide an uninstall target to avoid deleting any system-rekevant files. However, if working on a Linux-based OS one can 
