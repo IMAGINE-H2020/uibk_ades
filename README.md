@@ -46,7 +46,7 @@ Observe that for this you first have to successfully install the library. They d
 **IMPORTANT NOTE**: for now there is a known issue with the ```INCLUDE_TARGETS``` defined inside the `CMakeLists.txt` file of this project. In case your dependent project complains about those not being defined, just copy them from the main `CMakeLists.txt` file of this project into your project's `CMakeLists.txt`.
 
 
-To use this library on your own projects, just add the necessary find package directive,
+To use this library in your own projects, just add the necessary find package directive in your `CMakeLists.txt`,
 ```
 FIND_PACKAGE(ADES)
 ```
