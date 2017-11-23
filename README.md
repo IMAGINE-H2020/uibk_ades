@@ -53,4 +53,4 @@ sudo xargs < rm install_manifest.txt
 ```
 from inside the project's build directory.
 
-Observe that runing this command does not remove any directories created by running `sudo make install`. 
+Observe that runing this command does not remove any directories previsouly created by running `sudo make install`. 
