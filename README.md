@@ -44,3 +44,13 @@ Observe that for this you first have to successfully install the library. They d
 **IMPORTANT NOTE**: as the library is under active development, saved ADES are usually not compatible with newer versions of the library (i.e. do not use the last version of the library if you want to keep use of an older version of the ADES). A fix will be issued as soon as possible.
 
 **IMPORTANT NOTE**: for now there is a known issue with the ```INCLUDE_TARGETS``` defined inside the `CMakeLists.txt` file of this project. In case your dependent project complains about those not being defined, just copy them from the main `CMakeLists.txt` file of this project into your project's `CMakeLists.txt`.
+
+##Uninstall
+Bey default, CMake does not provide an uninstall target to avoid deleting any system-rekevant files. However, if working on a Linux-based OS one can 
+use the generated `install_manifest.txt` file together with the `xargs` command to delete any installed files by running
+```
+sudo xargs < rm install_manifest.txt
+```
+from inside the project's build directory.
+
+Observe that runing this command does not remove any directories created by running `sudo make install`. 
