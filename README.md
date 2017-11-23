@@ -45,6 +45,13 @@ Observe that for this you first have to successfully install the library. They d
 
 **IMPORTANT NOTE**: for now there is a known issue with the ```INCLUDE_TARGETS``` defined inside the `CMakeLists.txt` file of this project. In case your dependent project complains about those not being defined, just copy them from the main `CMakeLists.txt` file of this project into your project's `CMakeLists.txt`.
 
+
+To use this library on your own projects, just add the necessary find package directive,
+```
+FIND_PACKAGE(ADES)
+```
+which then will readily import necessary include files under the `ADES_INCLUDE_DIRS` tag and the library under `ADES_LIBRARY`. Do not forget to add an ```#include <ades/libades.h> include directive in your code.
+
 ## Uninstall
 Bey default, CMake does not provide an uninstall target to avoid deleting any system-rekevant files. However, if working on a Linux-based OS one can 
 use the generated `install_manifest.txt` file together with the `xargs` command to delete any installed files by running
