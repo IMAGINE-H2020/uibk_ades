@@ -7,31 +7,33 @@ namespace ades {
     class DMPContainer : public virtual Motion
     {
         private:
-            std::vector<double> gaussianCenters;
-            std::vector<double> gaussianVariances;
-            std::vector<double> weights;
-            std::vector<double> dmpCoeffs;
+            std::vector<double> K_;
+            std::vector<double> D_;
+            std::vector<double> weights_;
+            std::vector<double> psiMatrix_;
+            //std::vector<double> gaussianCenters;
+            //std::vector<double> gaussianVariances;
+            //std::vector<double> dmpCoeffs;
             // dmp coeffs ordered as tau, alpha_z, beta_z, alpha_g, see dmp definition:
-            int count_; // temp variable for testing
 
         public:
-            DMPContainer(std::vector<double> gC = std::vector<double>(),
-                         std::vector<double> gV = std::vector<double>(),
+            DMPContainer(std::vector<double> K = std::vector<double>(),
+                         std::vector<double> D = std::vector<double>(),
                          std::vector<double> w = std::vector<double>(),
-                         std::vector<double> coeffs = std::vector<double>()
+                         std::vector<double> psi = std::vector<double>()
                       )
             {
-                gaussianCenters = gC;
-                gaussianVariances = gV;
-                weights = w;
-                dmpCoeffs = coeffs;
+                K_ = K;
+                D_ = D;
+                weights_ = w;
+                psiMatrix_ = psi;
             }
 
             DMPContainer(const DMPContainer & d) :
-                gaussianCenters(d.gaussianCenters),
-                gaussianVariances(d.gaussianVariances),
-                weights(d.weights),
-                dmpCoeffs(d.dmpCoeffs)
+                K_(d.K_),
+                D_(d.D_),
+                weights_(d.weights_),
+                psiMatrix_(d.psiMatrix_)
             {
 
             }
@@ -44,10 +46,14 @@ namespace ades {
             std::map<std::string, std::vector<double>> getMotionParameters() const {
               std::map<std::string, std::vector<double>> params;
 
-              params.insert(std::pair<std::string, std::vector<double>>("gaussianCenters", gaussianCenters));
-              params.insert(std::pair<std::string, std::vector<double>>("gaussianVariances", gaussianVariances));
-              params.insert(std::pair<std::string, std::vector<double>>("weights", weights));
-              params.insert(std::pair<std::string, std::vector<double>>("dmpCoeffs", dmpCoeffs));
+              params.insert(std::pair<std::string, std::vector<double>>("K", K_));
+              params.insert(std::pair<std::string, std::vector<double>>("D", D_));
+              params.insert(std::pair<std::string, std::vector<double>>("weights", weights_));
+              params.insert(std::pair<std::string, std::vector<double>>("psiMatrix", psiMatrix_));
+              //params.insert(std::pair<std::string, std::vector<double>>("gaussianCenters", gaussianCenters));
+              //params.insert(std::pair<std::string, std::vector<double>>("gaussianVariances", gaussianVariances));
+              //params.insert(std::pair<std::string, std::vector<double>>("weights", weights));
+              //params.insert(std::pair<std::string, std::vector<double>>("dmpCoeffs", dmpCoeffs));
 
               return params;
             }
@@ -76,10 +82,10 @@ namespace ades {
             {
                 ar & BOOST_SERIALIZATION_BASE_OBJECT_NVP(Motion);
 
-                ar & BOOST_SERIALIZATION_NVP(gaussianCenters);
-                ar & BOOST_SERIALIZATION_NVP(gaussianVariances);
-                ar & BOOST_SERIALIZATION_NVP(weights);
-                ar & BOOST_SERIALIZATION_NVP(dmpCoeffs);
+                ar & BOOST_SERIALIZATION_NVP(K_);
+                ar & BOOST_SERIALIZATION_NVP(D_);
+                ar & BOOST_SERIALIZATION_NVP(weights_);
+                ar & BOOST_SERIALIZATION_NVP(psiMatrix_);
              }
     };
 
