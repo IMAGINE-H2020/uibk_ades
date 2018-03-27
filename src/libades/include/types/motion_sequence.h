@@ -15,6 +15,7 @@
 #include "../utils/serializable.h"
 #include "../motions/dmp.h"
 #include "../motions/trajectory.h"
+#include "../motions/unscrew.h"
 
 // For debugging
 #include <typeinfo>
@@ -211,6 +212,7 @@ namespace ades {
         {
             ar.template register_type<DMPContainer>();
             ar.template register_type<TrajectoryContainer>();
+            ar.template register_type<UnscrewContainer>();
 
             ar & BOOST_SERIALIZATION_NVP(ID);
             ar & BOOST_SERIALIZATION_NVP(inputTypes_);
@@ -265,6 +267,7 @@ namespace ades {
         {
             ar.template register_type<DMPContainer>();
             ar.template register_type<TrajectoryContainer>();
+            ar.template register_type<UnscrewContainer>();
 
             ar & BOOST_SERIALIZATION_NVP(ID);
             ar & BOOST_SERIALIZATION_NVP(inputTypes_);
